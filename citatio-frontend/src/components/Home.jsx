@@ -3,8 +3,7 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 const Home = (props) => {
 
   const [doiValue, setDoiValue] = useState('');
-
-  const [errors, setErrors] = useState({});
+  const [doiData, setDoiData] = useState('');
 
   const populateFields = useCallback(() => {
     if (props.post) {
@@ -17,10 +16,17 @@ const Home = (props) => {
   }, [populateFields]);
 
   async function submitHandler(event) {
+    const response = await fetch('api/hello',
+    {
+      method: 'GET',
+    }
+  );
+  setDoiData(await response.json());
+
     event.preventDefault();
   };
 
-  const doiInputChangeHandler = (event) => { setDoiValue(event.target.value) }
+  const doiInputChangeHandler = (data) => { setDoiValue(data) }
 
   const submitButtonText = props.onEditPost ? 'Update Post' : 'Add Post';
 
@@ -34,6 +40,7 @@ const Home = (props) => {
           </div>
           <button type="submit" className="btn btn-success">{submitButtonText}</button>
         </form>
+        {doiData}
       </div>
     </section>
   );

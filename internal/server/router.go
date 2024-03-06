@@ -15,8 +15,10 @@ func setRouter() *gin.Engine {
 	api := router.Group("/api")
 	{
 		// Add /hello GET route to router and define route handler function
-		api.GET("/hello", func(ctx *gin.Context) {
-			response := getDOI("10.1111/febs.13307")
+		api.GET("/doi/:doi1/:doi2", func(ctx *gin.Context) {
+			doi1 := ctx.Param("doi1")
+			doi2 := ctx.Param("doi2")
+			response := getDOI(doi1 + "/" + doi2)
 
 			ctx.JSON(200, response)
 		})

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 
@@ -16,6 +17,35 @@ func setRouter() *gin.Engine {
 	{
 		// Add /hello GET route to router and define route handler function
 		api.GET("/doi/:doi1/:doi2", func(ctx *gin.Context) {
+			doi1 := ctx.Param("doi1")
+			doi2 := ctx.Param("doi2")
+			response := getDOI(doi1 + "/" + doi2)
+
+			ctx.JSON(200, response)
+		})
+
+		api.GET("/reference/format1/:doi1/:doi2", func(ctx *gin.Context) {
+			doi1 := ctx.Param("doi1")
+			doi2 := ctx.Param("doi2")
+			response := getDOI(doi1 + "/" + doi2)
+
+			jsonString := []byte(response)
+
+			var jsonMap map[string]interface{}
+			json.Unmarshal([]byte(jsonString), &jsonMap)
+
+			ctx.JSON(200, response)
+		})
+
+		api.GET("/reference/format2/:doi2", func(ctx *gin.Context) {
+			doi1 := ctx.Param("doi1")
+			doi2 := ctx.Param("doi2")
+			response := getDOI(doi1 + "/" + doi2)
+
+			ctx.JSON(200, response)
+		})
+
+		api.GET("/reference/format3/:doi2", func(ctx *gin.Context) {
 			doi1 := ctx.Param("doi1")
 			doi2 := ctx.Param("doi2")
 			response := getDOI(doi1 + "/" + doi2)

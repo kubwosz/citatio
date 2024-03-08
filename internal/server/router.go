@@ -8,6 +8,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type FullResponse struct {
+	Message Doi
+}
+
+type Doi struct {
+	Doi       string
+	Type      string
+	Title     string
+	Author    string
+	Publisher string
+	Abstract  string
+}
+
+//10.1111/febs.13307
+
 func setRouter() *gin.Engine {
 	// Creates default gin router with Logger and Recovery middleware already attached
 	router := gin.Default()
@@ -21,18 +36,18 @@ func setRouter() *gin.Engine {
 			doi2 := ctx.Param("doi2")
 			response := getDOI(doi1 + "/" + doi2)
 
-			ctx.JSON(200, response)
+			jsonString := []byte(response)
+
+			var doi FullResponse
+			json.Unmarshal(jsonString, &doi)
+
+			ctx.JSON(200, doi.Message)
 		})
 
 		api.GET("/reference/format1/:doi1/:doi2", func(ctx *gin.Context) {
 			doi1 := ctx.Param("doi1")
 			doi2 := ctx.Param("doi2")
 			response := getDOI(doi1 + "/" + doi2)
-
-			jsonString := []byte(response)
-
-			var jsonMap map[string]interface{}
-			json.Unmarshal([]byte(jsonString), &jsonMap)
 
 			ctx.JSON(200, response)
 		})

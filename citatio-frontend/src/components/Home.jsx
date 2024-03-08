@@ -21,15 +21,15 @@ const Home = (props) => {
       method: 'GET',
     }
   );
-  let doiResponse = JSON.parse(await response.json());
+  let doiResponse = await response.json();
   console.log(doiResponse);
-  console.log(doiResponse["message-type"]);
   let doiObject = {
-    doi: doiResponse.message.DOI,
-    type: doiResponse.message.type,
-    publisher: doiResponse.message.publisher,
-    referenceCount: doiResponse.message["reference-count"],
-    abstract: doiResponse.message.abstract,
+    doi: doiResponse.Doi,
+    type: doiResponse.Type,
+    publisher: doiResponse.Publisher,
+    referenceCount: doiResponse.Author,
+    title: doiResponse.Title,
+    abstract: doiResponse.Abstract,
   }
   console.log(doiObject);
   setDoiData(doiObject);
@@ -53,6 +53,7 @@ const Home = (props) => {
         <ul class="list-group">
   <li class="list-group-item"><span class="label label-default">DOI:</span>   {doiData.doi}</li>
   <li class="list-group-item"><span class="label label-default">Type:</span>   {doiData.type}</li>
+  <li class="list-group-item"><span class="label label-default">Title:</span>   {doiData.title}</li>
   <li class="list-group-item"><span class="label label-default">Publisher:</span>   {doiData.publisher}</li>
   <li class="list-group-item"><span class="label label-default">ReferenceCount:</span>   {doiData.referenceCount}</li>
   <li class="list-group-item"><span class="label label-default">Abstract:</span>   </li>

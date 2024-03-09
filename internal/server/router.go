@@ -16,9 +16,15 @@ type Doi struct {
 	Doi       string
 	Type      string
 	Title     string
-	Author    string
+	Author    []Author
 	Publisher string
 	Abstract  string
+}
+
+type Author struct {
+	Given    string
+	Family   string
+	Sequence string
 }
 
 //10.1111/febs.13307

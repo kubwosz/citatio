@@ -26,9 +26,9 @@ const Home = (props) => {
   let doiObject = {
     doi: doiResponse.Doi,
     type: doiResponse.Type,
-    publisher: doiResponse.Publisher,
-    referenceCount: doiResponse.Author,
     title: doiResponse.Title,
+    authors: [],
+    publisher: doiResponse.Publisher,
     abstract: doiResponse.Abstract,
   }
   console.log(doiObject);
@@ -58,6 +58,9 @@ const Home = (props) => {
   <li class="list-group-item"><span class="label label-default">ReferenceCount:</span>   {doiData.referenceCount}</li>
   <li class="list-group-item"><span class="label label-default">Abstract:</span>   </li>
   <textarea>{doiData.abstract}</textarea>
+
+  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiData?.authors[0]?.Family + " "+ doiData?.authors[0]?.Given + ", " + doiData?.authors[1]?.Family + " " + doiData?.authors[1]?.Given + ", " + doiData.title + ", " + doiData.publisher } </li>
+
 </ul>
       </div>
     </section>

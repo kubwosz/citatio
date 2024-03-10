@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -9,16 +10,22 @@ import (
 )
 
 type FullResponse struct {
-	Message Doi
+	Message DoiMessage
 }
 
-type Doi struct {
-	Doi       string
-	Type      string
-	Title     string
-	Author    []Author
-	Publisher string
-	Abstract  string
+type DoiMessage struct {
+	Doi              string
+	Type             string
+	Title            string
+	Author           []Author
+	Publisher        string
+	Abstract         string
+	CreatedReference string
+	Published        Published
+}
+
+type Published struct {
+	DateParts [][]int `json:"date-parts"`
 }
 
 type Author struct {
@@ -44,10 +51,17 @@ func setRouter() *gin.Engine {
 
 			jsonString := []byte(response)
 
-			var doi FullResponse
-			json.Unmarshal(jsonString, &doi)
+			var doiResponse FullResponse
+			json.Unmarshal(jsonString, &doiResponse)
 
-			ctx.JSON(200, doi.Message)
+			var names string
+			for _, element := range doiResponse.Message.Author {
+				names += fmt.Sprintf("%s %c., ", element.Family, element.Given[0])
+			}
+
+			doiResponse.Message.CreatedReference = fmt.Sprintf("%s (%d) %s, %s ", names, doiResponse.Message.Published.DateParts[0][0], doiResponse.Message.Title, doiResponse.Message.Publisher)
+
+			ctx.JSON(200, doiResponse.Message)
 		})
 
 		api.GET("/reference/format1/:doi1/:doi2", func(ctx *gin.Context) {

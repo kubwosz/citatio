@@ -30,6 +30,8 @@ const Home = (props) => {
     authors: [],
     publisher: doiResponse.Publisher,
     abstract: doiResponse.Abstract,
+    createdReference: doiResponse.
+    CreatedReference
   }
   console.log(doiObject);
   setDoiData(doiObject);
@@ -59,7 +61,7 @@ const Home = (props) => {
   <li class="list-group-item"><span class="label label-default">Abstract:</span>   </li>
   <textarea>{doiData.abstract}</textarea>
 
-  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiData?.authors[0]?.Family + " "+ doiData?.authors[0]?.Given + ", " + doiData?.authors[1]?.Family + " " + doiData?.authors[1]?.Given + ", " + doiData.title + ", " + doiData.publisher } </li>
+  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiData.createdReference} </li>
 
 </ul>
       </div>

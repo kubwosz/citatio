@@ -69,15 +69,39 @@ func setRouter() *gin.Engine {
 			doi2 := ctx.Param("doi2")
 			response := getDOI(doi1 + "/" + doi2)
 
-			ctx.JSON(200, response)
+			jsonString := []byte(response)
+
+			var doiResponse FullResponse
+			json.Unmarshal(jsonString, &doiResponse)
+
+			var names string
+			for _, element := range doiResponse.Message.Author {
+				names += fmt.Sprintf("%s %c., ", element.Family, element.Given[0])
+			}
+
+			doiResponse.Message.CreatedReference = fmt.Sprintf("%s (%d) %s, %s ", names, doiResponse.Message.Published.DateParts[0][0], doiResponse.Message.Title, doiResponse.Message.Publisher)
+
+			ctx.JSON(200, doiResponse.Message)
 		})
 
-		api.GET("/reference/format2/:doi2", func(ctx *gin.Context) {
+		api.GET("/reference/format2/:doi1/:doi2", func(ctx *gin.Context) {
 			doi1 := ctx.Param("doi1")
 			doi2 := ctx.Param("doi2")
 			response := getDOI(doi1 + "/" + doi2)
 
-			ctx.JSON(200, response)
+			jsonString := []byte(response)
+
+			var doiResponse FullResponse
+			json.Unmarshal(jsonString, &doiResponse)
+
+			var names string
+			for _, element := range doiResponse.Message.Author {
+				names += fmt.Sprintf("%s %c., ", element.Family, element.Given[0])
+			}
+
+			doiResponse.Message.CreatedReference = fmt.Sprintf("%s (%d) %s, %s ", names, doiResponse.Message.Published.DateParts[0][0], doiResponse.Message.Title, doiResponse.Message.Publisher)
+
+			ctx.JSON(200, doiResponse.Message)
 		})
 
 		api.GET("/reference/format3/:doi2", func(ctx *gin.Context) {

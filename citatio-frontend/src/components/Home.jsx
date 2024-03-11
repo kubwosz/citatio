@@ -1,10 +1,26 @@
 import { useState, useContext, useEffect, useCallback } from 'react';
 
+
+
 const Home = (props) => {
 
   const [doiValue, setDoiValue] = useState('');
   const [doiData, setDoiData] = useState('');
+  const [doiDataFormat1, setDoiData1] = useState('');
+  const [doiDataFormat2, setDoiData2] = useState('');
 
+  const delegate = {
+    setDoiData: function(doiObject) {
+      setDoiData(doiObject)
+    },
+    setDoiData1: function(doiObject) {
+      setDoiData1(doiObject)
+    },
+    setDoiData2: function(doiObject) {
+      setDoiData2(doiObject)
+    }
+  };
+  
   const populateFields = useCallback(() => {
     if (props.post) {
       setDoiValue(props.post.Title);
@@ -16,7 +32,17 @@ const Home = (props) => {
   }, [populateFields]);
 
   async function submitHandler(event) {
-    const response = await fetch('api/doi/' + doiValue,
+    await getDoiData('doi/', delegate.setDoiData);
+    await getDoiData('reference/format1', delegate.setDoiData1);
+    await getDoiData('reference/format2', delegate.setDoiData2);
+
+    event.preventDefault();
+  };
+
+  const doiInputChangeHandler = (data) => { setDoiValue(data.target.value) }
+
+  async function getDoiData(url, delegatee) {
+    const response = await fetch('api/' + url + '/' + doiValue,
     {
       method: 'GET',
     }
@@ -30,16 +56,13 @@ const Home = (props) => {
     authors: [],
     publisher: doiResponse.Publisher,
     abstract: doiResponse.Abstract,
-    createdReference: doiResponse.
-    CreatedReference
+    createdReference: doiResponse.CreatedReference
   }
   console.log(doiObject);
-  setDoiData(doiObject);
+  delegatee(doiObject);
+  // setDoiData(doiObject);
+  }
 
-    event.preventDefault();
-  };
-
-  const doiInputChangeHandler = (data) => { setDoiValue(data.target.value) }
 
   return (
     <section>
@@ -62,6 +85,8 @@ const Home = (props) => {
   <textarea>{doiData.abstract}</textarea>
 
   <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiData.createdReference} </li>
+  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiDataFormat1.createdReference} </li>
+  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiDataFormat2.createdReference} </li>
 
 </ul>
       </div>

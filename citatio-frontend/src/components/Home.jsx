@@ -32,7 +32,7 @@ const Home = (props) => {
   }, [populateFields]);
 
   async function submitHandler(event) {
-    await getDoiData('doi/', delegate.setDoiData);
+    await getDoiData('doi', delegate.setDoiData);
     await getDoiData('reference/format1', delegate.setDoiData1);
     await getDoiData('reference/format2', delegate.setDoiData2);
 

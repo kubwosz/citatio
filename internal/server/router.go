@@ -1,6 +1,7 @@
 package server
 
 import (
+	"citatio/internal/domain/converters"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -9,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type FullResponse struct {
+type FullDoiResponse struct {
 	Message DoiMessage
 }
 
@@ -44,15 +45,16 @@ func setRouter() *gin.Engine {
 	api := router.Group("/api")
 	{
 		// Add /hello GET route to router and define route handler function
-		api.GET("/doi/:doi1/:doi2", func(ctx *gin.Context) {
-			doi1 := ctx.Param("doi1")
-			doi2 := ctx.Param("doi2")
-			response := getDOI(doi1 + "/" + doi2)
+		api.GET("/doi/*doi", func(ctx *gin.Context) {
+			doi := ctx.Param("doi")
+			response := getDOI(doi)
 
 			jsonString := []byte(response)
 
-			var doiResponse FullResponse
+			var doiResponse FullDoiResponse
 			json.Unmarshal(jsonString, &doiResponse)
+
+			paper := converters.DoiToPaper(doiResponse)
 
 			var names string
 			for _, element := range doiResponse.Message.Author {

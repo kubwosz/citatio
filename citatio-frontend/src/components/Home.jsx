@@ -33,8 +33,8 @@ const Home = (props) => {
 
   async function submitHandler(event) {
     await getDoiData('doi', delegate.setDoiData);
-    await getDoiData('reference/format1', delegate.setDoiData1);
-    await getDoiData('reference/format2', delegate.setDoiData2);
+    // await getDoiData('reference/format1', delegate.setDoiData1);
+    // await getDoiData('reference/format2', delegate.setDoiData2);
 
     event.preventDefault();
   };
@@ -47,20 +47,8 @@ const Home = (props) => {
       method: 'GET',
     }
   );
-  let doiResponse = await response.json();
-  console.log(doiResponse);
-  let doiObject = {
-    doi: doiResponse.Doi,
-    type: doiResponse.Type,
-    title: doiResponse.Title,
-    authors: [],
-    publisher: doiResponse.Publisher,
-    abstract: doiResponse.Abstract,
-    createdReference: doiResponse.CreatedReference
-  }
-  console.log(doiObject);
-  delegatee(doiObject);
-  // setDoiData(doiObject);
+  let createdReference = await response.json();
+  setDoiData(createdReference);
   }
 
 
@@ -76,18 +64,7 @@ const Home = (props) => {
         </form>
         <h2>Information about your DOI:</h2>
         <ul class="list-group">
-  <li class="list-group-item"><span class="label label-default">DOI:</span>   {doiData.doi}</li>
-  <li class="list-group-item"><span class="label label-default">Type:</span>   {doiData.type}</li>
-  <li class="list-group-item"><span class="label label-default">Title:</span>   {doiData.title}</li>
-  <li class="list-group-item"><span class="label label-default">Publisher:</span>   {doiData.publisher}</li>
-  <li class="list-group-item"><span class="label label-default">ReferenceCount:</span>   {doiData.referenceCount}</li>
-  <li class="list-group-item"><span class="label label-default">Abstract:</span>   </li>
-  <textarea>{doiData.abstract}</textarea>
-
-  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiData.createdReference} </li>
-  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiDataFormat1.createdReference} </li>
-  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiDataFormat2.createdReference} </li>
-
+  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiData} </li>
 </ul>
       </div>
     </section>

@@ -1,39 +1,15 @@
 package server
 
 import (
+	"citatio/internal/domain/cite_styles"
 	"citatio/internal/domain/converters"
+	"citatio/internal/domain/models"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
-
-type FullDoiResponse struct {
-	Message DoiMessage
-}
-
-type DoiMessage struct {
-	Doi              string
-	Type             string
-	Title            string
-	Author           []Author
-	Publisher        string
-	Abstract         string
-	CreatedReference string
-	Published        Published
-}
-
-type Published struct {
-	DateParts [][]int `json:"date-parts"`
-}
-
-type Author struct {
-	Given    string
-	Family   string
-	Sequence string
-}
 
 //10.1111/febs.13307
 
@@ -47,69 +23,24 @@ func setRouter() *gin.Engine {
 		// Add /hello GET route to router and define route handler function
 		api.GET("/doi/*doi", func(ctx *gin.Context) {
 			doi := ctx.Param("doi")
-			response := getDOI(doi)
+			paper := GetPaper(doi)
+			response := cite_styles.GetReferenceAAA(paper)
 
-			jsonString := []byte(response)
-
-			var doiResponse FullDoiResponse
-			json.Unmarshal(jsonString, &doiResponse)
-
-			paper := converters.DoiToPaper(doiResponse)
-
-			var names string
-			for _, element := range doiResponse.Message.Author {
-				names += fmt.Sprintf("%s %c., ", element.Family, element.Given[0])
-			}
-
-			doiResponse.Message.CreatedReference = fmt.Sprintf("%s (%d) %s, %s ", names, doiResponse.Message.Published.DateParts[0][0], doiResponse.Message.Title, doiResponse.Message.Publisher)
-
-			ctx.JSON(200, doiResponse.Message)
+			ctx.JSON(200, response)
 		})
 
-		api.GET("/reference/format1/:doi1/:doi2", func(ctx *gin.Context) {
-			doi1 := ctx.Param("doi1")
-			doi2 := ctx.Param("doi2")
-			response := getDOI(doi1 + "/" + doi2)
+		api.GET("/reference/aaa/*doi", func(ctx *gin.Context) {
+			doi := ctx.Param("doi")
+			paper := GetPaper(doi)
+			response := cite_styles.GetReferenceAAA(paper)
 
-			jsonString := []byte(response)
-
-			var doiResponse FullResponse
-			json.Unmarshal(jsonString, &doiResponse)
-
-			var names string
-			for _, element := range doiResponse.Message.Author {
-				names += fmt.Sprintf("%s %c., ", element.Family, element.Given[0])
-			}
-
-			doiResponse.Message.CreatedReference = fmt.Sprintf("%s (%d) %s, %s ", names, doiResponse.Message.Published.DateParts[0][0], doiResponse.Message.Title, doiResponse.Message.Publisher)
-
-			ctx.JSON(200, doiResponse.Message)
+			ctx.JSON(200, response)
 		})
 
-		api.GET("/reference/format2/:doi1/:doi2", func(ctx *gin.Context) {
-			doi1 := ctx.Param("doi1")
-			doi2 := ctx.Param("doi2")
-			response := getDOI(doi1 + "/" + doi2)
-
-			jsonString := []byte(response)
-
-			var doiResponse FullResponse
-			json.Unmarshal(jsonString, &doiResponse)
-
-			var names string
-			for _, element := range doiResponse.Message.Author {
-				names += fmt.Sprintf("%s %c., ", element.Family, element.Given[0])
-			}
-
-			doiResponse.Message.CreatedReference = fmt.Sprintf("%s (%d) %s, %s ", names, doiResponse.Message.Published.DateParts[0][0], doiResponse.Message.Title, doiResponse.Message.Publisher)
-
-			ctx.JSON(200, doiResponse.Message)
-		})
-
-		api.GET("/reference/format3/:doi2", func(ctx *gin.Context) {
-			doi1 := ctx.Param("doi1")
-			doi2 := ctx.Param("doi2")
-			response := getDOI(doi1 + "/" + doi2)
+		api.GET("/reference/apa/*doi", func(ctx *gin.Context) {
+			doi := ctx.Param("doi")
+			paper := GetPaper(doi)
+			response := cite_styles.GetReferenceAPA(paper)
 
 			ctx.JSON(200, response)
 		})
@@ -120,7 +51,17 @@ func setRouter() *gin.Engine {
 	return router
 }
 
-func getDOI(doi string) string {
+func GetPaper(doi string) (paper models.Paper) {
+	doiResponse := GetDOI(doi)
+	jsonString := []byte(doiResponse)
+	var doiFullResponse models.FullDoiResponse
+	json.Unmarshal(jsonString, &doiFullResponse)
+
+	paper = converters.DoiToPaper(doiFullResponse)
+	return
+}
+
+func GetDOI(doi string) string {
 	url := "https://api.crossref.org/works/" + doi
 
 	response, err := http.Get(url)

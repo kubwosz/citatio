@@ -2,9 +2,9 @@ package models
 
 type Paper struct {
 	Doi       string
-	Year      string
+	Year      int
 	Title     string
-	Author    []Author
+	Authors   []Author
 	Publisher string
 	Abstract  string
 	Link      string

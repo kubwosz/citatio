@@ -32,8 +32,8 @@ const Home = (props) => {
   }, [populateFields]);
 
   async function submitHandler(event) {
-    await getDoiData('doi', delegate.setDoiData);
-    // await getDoiData('reference/format1', delegate.setDoiData1);
+    await getDoiData('reference/aaa', delegate.setDoiData);
+    await getDoiData('reference/apa', delegate.setDoiData1);
     // await getDoiData('reference/format2', delegate.setDoiData2);
 
     event.preventDefault();
@@ -48,7 +48,7 @@ const Home = (props) => {
     }
   );
   let createdReference = await response.json();
-  setDoiData(createdReference);
+  delegatee(createdReference);
   }
 
 
@@ -64,7 +64,8 @@ const Home = (props) => {
         </form>
         <h2>Information about your DOI:</h2>
         <ul class="list-group">
-  <li class="list-group-item"><span class="label label-default">Your reference:</span>   {doiData} </li>
+  <li class="list-group-item"><span class="label label-default">Your reference AAA:</span>   {doiData} </li>
+  <li class="list-group-item"><span class="label label-default">Your reference APA:</span>   {doiDataFormat1} </li>
 </ul>
       </div>
     </section>

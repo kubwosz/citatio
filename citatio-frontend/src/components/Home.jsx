@@ -64,19 +64,12 @@ const Home = (props) => {
         </form>
         <h2>Information about your DOI:</h2>
         <ul class="list-group">
-        <div class="flex">
-  <div class="flex-none w-14 h-14">
-    01
-  </div>
-  <div class="flex-initial w-64">
-    02
-  </div>
-  <div class="flex-initial w-32 ">
-    03
-  </div>
-</div>        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-  Single toggle
-</button>
+        <input
+                 type="button"
+                 className={butonActivity === true ? 'active' : ''}
+                 value="value1"
+                 onClick={() => setButton(!butonActivity)}
+                 />;
   <li class="list-group-item"><span class="label label-default">Your reference AAA:</span>   {doiData} </li>
   <li class="list-group-item"><span class="label label-default">Your reference APA:</span>   {doiDataFormat1} </li>
 </ul>

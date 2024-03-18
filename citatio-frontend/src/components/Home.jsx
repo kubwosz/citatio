@@ -74,17 +74,7 @@ const Home = (props) => {
   <div class="flex-initial w-32 ">
     03
   </div>
-</div>        
-<button type="button" class="btn btn-primary btn-aaa" data-toggle="button" aria-pressed="false" autocomplete="off">
-  Single toggle
-</button>
-<button type="button" class="btn btn-primary btn-apa" data-toggle="button" aria-pressed="false" autocomplete="off">
-  Single toggle
-</button>
-<button type="button" class="btn btn-primary btn-" data-toggle="button" aria-pressed="false" autocomplete="off">
-  Single toggle
-</button>
-<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+</div>        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
   Single toggle
 </button>
   <li class="list-group-item"><span class="label label-default">Your reference AAA:</span>   {doiData} </li>

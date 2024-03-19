@@ -8,7 +8,10 @@ const Home = (props) => {
   const [doiData, setDoiData] = useState('');
   const [doiDataFormat1, setDoiData1] = useState('');
   const [doiDataFormat2, setDoiData2] = useState('');
-  const [butonActivity, setButton] = useState('');
+  const [butonActivity, setActivityButtons] = useState([
+    {name: 'AAA', isActive: false},
+    {name: 'APA', isActive: false},
+  ]);
 
   const delegate = {
     setDoiData: function(doiObject) {
@@ -52,40 +55,50 @@ const Home = (props) => {
   delegatee(createdReference);
   }
 
+  function handleActivityToggle(index) {
+    const nextActivityButtons = butonActivity.map((btn, i) => {
+      if (i === index) {
+        btn.isActive = !btn.isActive;
+      }
+
+      return btn;
+    });
+    setActivityButtons(nextActivityButtons);
+  }
+
   return (
-    <div className="">
-    <div className="leftPanel flex-auto">
+    <div className="grid grid-cols-2 gap-4">
+    <div className="leftPanel">
       <label htmlFor="title">Put here your DOI</label>
       <input
         id="title"
+        className="bg-green-300 hover:bg-green-500 text-white py-2 rounded"
         type="text"
-        className="form-control"
         required
         value={doiValue}
         onChange={doiInputChangeHandler}
       ></input>
       <button
-        type="button"
         onClick={submitHandler}
-        className="btn btn-success"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Get DOI information
       </button>
     </div>
-    <div className="rightPanel flex-auto">
+    <div className="rightPanel grid grid-cols-2 ">
       <h2>Information about your DOI:</h2>
+      {butonActivity.map((btn, idx) => (
+    <button
+    key={btn.name}
+    onClick={() => handleActivityToggle(idx)}
+    className={btn.isActive ? 'active' : ''}
+  >
+    Nazwa: {btn.name}
+  </button>
+  ))}
       <ul class="list-group">
-        <div class="flex">
-          <div class="flex-none w-14 h-14">01</div>
-          <div class="flex-initial w-64">02</div>
-          <div class="flex-initial w-32 ">03</div>
-        </div>
         <button
-          type="button"
           class="btn btn-primary btn-aaa"
-          data-toggle="button"
-          aria-pressed="false"
-          autocomplete="off"
         >
           Single toggle
         </button>

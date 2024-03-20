@@ -8,9 +8,9 @@ const Home = (props) => {
   const [doiData, setDoiData] = useState('');
   const [doiDataFormat1, setDoiData1] = useState('');
   const [doiDataFormat2, setDoiData2] = useState('');
-  const [butonActivity, setActivityButtons] = useState([
-    {name: 'AAA', isActive: false},
-    {name: 'APA', isActive: false},
+  const [citations, setCitations] = useState([
+    {type: 'AAA', isActive: false, citation: 'AAADefault'},
+    {type: 'APA', isActive: false, citation: 'APADefault'},
   ]);
 
   const delegate = {
@@ -36,9 +36,11 @@ const Home = (props) => {
   }, [populateFields]);
 
   async function submitHandler(event) {
-    await getDoiData('reference/aaa', delegate.setDoiData);
-    await getDoiData('reference/apa', delegate.setDoiData1);
-    // await getDoiData('reference/format2', delegate.setDoiData2);
+    let resAAA = await getDoiData('reference/aaa', delegate.setDoiData);
+    let resAPA = await getDoiData('reference/apa', delegate.setDoiData1);
+
+    setCitationByType('AAA', resAAA);
+    setCitationByType('APA', resAPA);
 
     event.preventDefault();
   };
@@ -53,23 +55,34 @@ const Home = (props) => {
   );
   let createdReference = await response.json();
   delegatee(createdReference);
+  return createdReference;
   }
 
-  function handleActivityToggle(index) {
-    const nextActivityButtons = butonActivity.map((btn, i) => {
+  function setCitationActivityByIndex(index) {
+    const nextActivityButtons = citations.map((btn, i) => {
       if (i === index) {
         btn.isActive = !btn.isActive;
       }
 
       return btn;
     });
-    setActivityButtons(nextActivityButtons);
+    setCitations(nextActivityButtons);
+  }
+
+  function setCitationByType(type, citation) {
+    const nextCitations = citations.map(c => {
+      if (c.type === type) {
+        c.citation = citation;
+      }
+      return c;
+    });
+    setCitations(nextCitations);
   }
 
   return (
     <div className="grid grid-cols-2 gap-4">
     <div className="leftPanel">
-      <label htmlFor="title">Put here your DOI</label>
+      <label htmlFor="title">Put here your DOI </label>
       <input
         id="title"
         className="bg-green-300 hover:bg-green-500 text-white py-2 rounded"
@@ -82,60 +95,32 @@ const Home = (props) => {
         onClick={submitHandler}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
-        Get DOI information
+        Get DOI information 
       </button>
     </div>
-    <div className="rightPanel grid grid-cols-2 ">
+    <div className="rightPanel grid grid-cols-3 ">
+      <div>
       <h2>Information about your DOI:</h2>
-      {butonActivity.map((btn, idx) => (
+      {citations.map((btn, idx) => (
     <button
     key={btn.name}
-    onClick={() => handleActivityToggle(idx)}
-    className={btn.isActive ? 'active' : ''}
+    onClick={() => setCitationActivityByIndex(idx)}
+    className={(btn.isActive ? 'active ' : '') + "[&.active]:bg-blue-400 bg-red-400 rounded px-2 py-2 m-2"} 
   >
-    Nazwa: {btn.name}
+    Citation type: {btn.type}
   </button>
   ))}
+  </div>
+  </div>
+  <div>
       <ul class="list-group">
-        <button
-          class="btn btn-primary btn-aaa"
-        >
-          Single toggle
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary btn-apa"
-          data-toggle="button"
-          aria-pressed="false"
-          autocomplete="off"
-        >
-          Single toggle
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary btn-aaa"
-          data-toggle="button"
-          aria-pressed="false"
-          autocomplete="off"
-        >
-          Single toggle
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="button"
-          aria-pressed="false"
-          autocomplete="off"
-        >
-          Single toggle
-        </button>
         <li class="list-group-item">
           <span class="label label-default">Your reference AAA:</span>{" "}
-          {doiData}{" "}
+          {citations.filter(c => c.type === 'AAA' && c.isActive === true)[0]?.citation}
         </li>
         <li class="list-group-item">
           <span class="label label-default">Your reference APA:</span>{" "}
-          {doiDataFormat1}{" "}
+          {citations.filter(c => c.type === 'APA' && c.isActive === true)[0]?.citation}
         </li>
       </ul>
     </div>

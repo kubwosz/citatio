@@ -80,12 +80,12 @@ const Home = (props) => {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-    <div className="leftPanel">
-      <label htmlFor="title">Put here your DOI </label>
+    <div className="grid grid-rows-2 gap-4 font-myFont">
+    <div className="top-panel flex justify-center flex-col mt-5">
+      <h1 className="bg-slate-500 max-w-40 self-center p-2">Put here your DOI: </h1>
       <input
         id="title"
-        className="bg-green-300 hover:bg-green-500 text-white py-2 rounded"
+        className="block bg-green-300 hover:bg-green-500 text-white py-2 rounded m-3 self-center"
         type="text"
         required
         value={doiValue}
@@ -93,12 +93,12 @@ const Home = (props) => {
       ></input>
       <button
         onClick={submitHandler}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
       >
         Get DOI information 
       </button>
     </div>
-    <div className="rightPanel grid grid-cols-3 ">
+    <div className="botton-panel grid grid-cols-3 ">
       <div>
       <h2>Information about your DOI:</h2>
       {citations.map((btn, idx) => (

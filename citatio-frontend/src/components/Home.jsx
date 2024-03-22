@@ -11,6 +11,9 @@ const Home = (props) => {
   const [citations, setCitations] = useState([
     {type: 'AAA', isActive: false, citation: 'AAADefault'},
     {type: 'APA', isActive: false, citation: 'APADefault'},
+    {type: 'APA', isActive: false, citation: 'APADefault'},
+    {type: 'APA', isActive: false, citation: 'APADefault'},
+    {type: 'APA', isActive: false, citation: 'APADefault'},
   ]);
 
   const delegate = {
@@ -82,10 +85,11 @@ const Home = (props) => {
   return (
     <div className="grid grid-rows-2 gap-4 font-myFont">
     <div className="top-panel flex justify-center flex-col mt-5">
-      <h1 className="bg-slate-500 max-w-40 self-center p-2">Put here your DOI: </h1>
+      <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
       <input
         id="title"
-        className="block bg-green-300 hover:bg-green-500 text-white py-2 rounded m-3 self-center"
+        className="block bg-rose-200 w-3/12 hover:bg-green-500 text-white py-2 rounded m-3 self-center"
+        placeholder=" DOI..."
         type="text"
         required
         value={doiValue}
@@ -99,9 +103,11 @@ const Home = (props) => {
       </button>
     </div>
     <div className="botton-panel grid grid-cols-3 ">
-      <div>
+      <div className="flex flex-col ">
       <h2>Information about your DOI:</h2>
+      <div className="cit-type-buttons h-3/4">
       {citations.map((btn, idx) => (
+        <div>
     <button
     key={btn.name}
     onClick={() => setCitationActivityByIndex(idx)}
@@ -109,7 +115,9 @@ const Home = (props) => {
   >
     Citation type: {btn.type}
   </button>
+  </div>
   ))}
+  </div>
   </div>
   </div>
   <div>

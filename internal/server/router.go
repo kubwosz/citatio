@@ -5,8 +5,11 @@ import (
 	"citatio/internal/domain/converters"
 	"citatio/internal/domain/models"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"reflect"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,26 +27,26 @@ func setRouter() *gin.Engine {
 		api.GET("/doi/*doi", func(ctx *gin.Context) {
 			doi := ctx.Param("doi")
 			paper := GetPaper(doi)
-			response := cite_styles.GetReferenceAAA(paper)
+			response := "cite_styles.GetReference(paper)" + paper.Doi
 
 			ctx.JSON(200, response)
 		})
 
-		api.GET("/reference/aaa/*doi", func(ctx *gin.Context) {
-			doi := ctx.Param("doi")
-			paper := GetPaper(doi)
-			response := cite_styles.GetReferenceAAA(paper)
+		references := cite_styles.ReferenceSource{}
+		t := reflect.TypeOf(&references)
+		for i := 0; i < t.NumMethod(); i++ {
+			refType := strings.ToLower(t.Method(i).Name)
 
-			ctx.JSON(200, response)
-		})
+			api.GET(fmt.Sprintf("/reference/%s/*doi", string(refType)), func(ctx *gin.Context) {
+				doi := ctx.Param("doi")
+				paper := GetPaper(doi)
+				references.Paper = paper
+				method := reflect.ValueOf(t).MethodByName("MyFunc")
+				response := method.Call(nil)
 
-		api.GET("/reference/apa/*doi", func(ctx *gin.Context) {
-			doi := ctx.Param("doi")
-			paper := GetPaper(doi)
-			response := cite_styles.GetReferenceAPA(paper)
-
-			ctx.JSON(200, response)
-		})
+				ctx.JSON(200, response)
+			})
+		}
 	}
 
 	router.NoRoute(func(ctx *gin.Context) { ctx.JSON(http.StatusNotFound, gin.H{}) })

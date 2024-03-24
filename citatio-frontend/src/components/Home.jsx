@@ -121,13 +121,16 @@ const Home = (props) => {
           </div>
         </div>
         <div>
-          {citations.map((c) => (
-            <div>
-          <span class="label label-default uppercase">{c.type}</span>{" "}
-            <TextboxCitation citation={c.citation}/>
-            {console.log(c.citation)}
-            </div>
-          ))}
+          {citations.map((c) => {
+            if(c.isActive){
+              return(<div>
+              <span class="label label-default uppercase">{c.type}</span>
+                <TextboxCitation citation={c.citation}/>
+                {console.log(c.citation)}
+                </div>)
+            }
+          } 
+          )}
         </div>
       </div>
     </div>

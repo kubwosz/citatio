@@ -34,17 +34,17 @@ func setRouter() *gin.Engine {
 
 		references := cite_styles.ReferenceSource{}
 		t := reflect.TypeOf(&references)
+
 		for i := 0; i < t.NumMethod(); i++ {
 			refType := strings.ToLower(t.Method(i).Name)
 
 			api.GET(fmt.Sprintf("/reference/%s/*doi", string(refType)), func(ctx *gin.Context) {
 				doi := ctx.Param("doi")
 				paper := GetPaper(doi)
-				references.Paper = paper
-				reflectValue := reflect.ValueOf(t)
-				upper := strings.ToUpper(t.Method(i).Name)
-				method := reflectValue.MethodByName(upper)
-				response := method.Call(nil)
+				// reflectValue := reflect.ValueOf(&t) <-- it was a mistake
+				method := reflect.ValueOf(references).MethodByName(t.Method(i).Name)
+				reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
+				response := reflectResponse[0].Interface()
 
 				ctx.JSON(200, response)
 			})

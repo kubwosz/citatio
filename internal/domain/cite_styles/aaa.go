@@ -2,13 +2,12 @@ package cite_styles
 
 import (
 	"citatio/internal/domain/manipulators"
-	"citatio/internal/domain/models"
 	"fmt"
 )
 
-func (p ReferenceSource) AAA(paper models.Paper) (reference string) {
-	names := manipulators.GetSurnameAndFirstLetterOfName(paper)
+func (p ReferenceSource) AAA() (reference string) {
+	names := manipulators.GetSurnameAndFirstLetterOfName(p.Paper)
 
-	reference = fmt.Sprintf("%s %v. \"%s\" %s. %v", names, paper.Year, paper.Title, paper.Publisher, paper.Link)
+	reference = fmt.Sprintf("%s %v. \"%s\" %s. %v", names, p.Paper.Year, p.Paper.Title, p.Paper.Publisher, p.Paper.Link)
 	return
 }

@@ -41,7 +41,9 @@ func setRouter() *gin.Engine {
 				doi := ctx.Param("doi")
 				paper := GetPaper(doi)
 				references.Paper = paper
-				method := reflect.ValueOf(t).MethodByName("MyFunc")
+				reflectValue := reflect.ValueOf(t)
+				upper := strings.ToUpper(t.Method(i).Name)
+				method := reflectValue.MethodByName(upper)
 				response := method.Call(nil)
 
 				ctx.JSON(200, response)

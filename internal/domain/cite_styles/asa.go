@@ -7,8 +7,8 @@ import (
 )
 
 func (p ReferenceSource) ASA(paper models.Paper) (reference string) {
-	names := manipulators.GetSurnameAndFirstLetterOfName(paper)
+	names := manipulators.GetOnlySurname(paper, ", ")
 
-	reference = fmt.Sprintf("%s %v. \"%s\" %s. %v", names, paper.Year, paper.Title, paper.Publisher, paper.Link)
+	reference = fmt.Sprintf("%s %v. \"%s\" %s. %v", names, paper.Year, paper.Title, paper.Publisher, paper.Doi)
 	return
 }

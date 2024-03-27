@@ -7,16 +7,8 @@ import (
 )
 
 func (p ReferenceSource) AAA(paper models.Paper) (reference string) {
-	names := manipulators.GetSurnameAndFirstLetterOfName(paper)
+	names := manipulators.GetSurnameAndFirstLetterOfName(paper, ", ")
 
 	reference = fmt.Sprintf("%s %v. \"%s\" %s. %v", names, paper.Year, paper.Title, paper.Publisher, paper.Link)
-	return
-}
-
-func (p ReferenceSource) BBB(paper models.Paper) (reference string) {
-	fmt.Println("hello")
-	names := manipulators.GetSurnameAndFirstLetterOfName(paper)
-
-	reference = "" + names
 	return
 }

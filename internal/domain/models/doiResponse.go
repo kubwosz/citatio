@@ -7,7 +7,7 @@ type FullDoiResponse struct {
 type DoiMessage struct {
 	Doi              string
 	Type             string
-	Title            string
+	Title            []string
 	Author           []Author2
 	Publisher        string
 	Abstract         string

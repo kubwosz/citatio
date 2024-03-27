@@ -4,27 +4,12 @@ import TextboxCitation from "./TextboxCitation"
 const Home = (props) => {
   const [doiValue, setDoiValue] = useState("");
   const [doiData, setDoiData] = useState("");
-  const [doiDataFormat1, setDoiData1] = useState("");
-  const [doiDataFormat2, setDoiData2] = useState("");
   const [citations, setCitations] = useState([
     { type: "AAA", isActive: false, citation: "AAADefault" },
     { type: "APA", isActive: false, citation: "APADefault" },
-    { type: "APA", isActive: false, citation: "APADefault" },
-    { type: "APA", isActive: false, citation: "APADefault" },
-    { type: "APA", isActive: false, citation: "APADefault" },
+    { type: "APSA", isActive: false, citation: "APSADefault" },
+    { type: "ASA", isActive: false, citation: "ASADefault" },
   ]);
-
-  const delegate = {
-    setDoiData: function (doiObject) {
-      setDoiData(doiObject);
-    },
-    setDoiData1: function (doiObject) {
-      setDoiData1(doiObject);
-    },
-    setDoiData2: function (doiObject) {
-      setDoiData2(doiObject);
-    },
-  };
 
   const populateFields = useCallback(() => {
     if (props.post) {
@@ -37,11 +22,15 @@ const Home = (props) => {
   }, [populateFields]);
 
   async function submitHandler(event) {
-    let resAAA = await getDoiData("reference/aaa", delegate.setDoiData);
-    let resAPA = await getDoiData("reference/apa", delegate.setDoiData1);
+    let resAAA = await getDoiData("reference/aaa");
+    let resAPA = await getDoiData("reference/apa");
+    let resAPSA = await getDoiData("reference/apsa");
+    let resASA = await getDoiData("reference/asa");
 
     setCitationByType("AAA", resAAA);
     setCitationByType("APA", resAPA);
+    setCitationByType("APSA", resAPSA);
+    setCitationByType("ASA", resASA);
 
     event.preventDefault();
   }
@@ -50,12 +39,11 @@ const Home = (props) => {
     setDoiValue(data.target.value);
   };
 
-  async function getDoiData(url, delegatee) {
+  async function getDoiData(url) {
     const response = await fetch("api/" + url + "/" + doiValue, {
       method: "GET",
     });
     let createdReference = await response.json();
-    delegatee(createdReference);
     return createdReference;
   }
 

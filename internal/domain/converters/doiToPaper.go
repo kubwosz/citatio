@@ -19,7 +19,7 @@ func DoiToPaper(doiResponse models.FullDoiResponse) models.Paper {
 	return models.Paper{
 		Doi:       doiResponse.Message.Doi,
 		Year:      doiResponse.Message.Published.DateParts[0][0],
-		Title:     doiResponse.Message.Title,
+		Title:     doiResponse.Message.Title[0],
 		Authors:   authors,
 		Publisher: doiResponse.Message.Publisher,
 		Abstract:  doiResponse.Message.Abstract,

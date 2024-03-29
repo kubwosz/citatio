@@ -2,12 +2,15 @@
 import { useState } from "react";
 
 const TextboxCitation = (props) => {
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+
+
     function copyToClipboard() {
    // Copy the text inside the text field
   navigator.clipboard.writeText(props.citation);
 
   // Alert the copied text
-  alert("Copied the text: " + props.citation);
+  setTooltipVisible(true);
       }
 
 return(
@@ -29,8 +32,8 @@ return(
                 </svg>
             </span>
         </button>
-        <div id="tooltip-copy-npm-install-copy-button" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            <span id="default-tooltip-message">Copy to clipboard</span>
+        <div className={`absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm tooltip dark:bg-gray-700 ${tooltipVisible ? " opacity-100" : " opacity-0"}`}>
+            {/* <span id="default-tooltip-message">Copy to clipboard</span> */}
             <span id="success-tooltip-message" class="hidden">Copied!</span>
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>

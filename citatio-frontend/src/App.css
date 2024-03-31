@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+
+#my-tooltip {
+  transition: all 0.3s ease-in-out !important;
+  opacity: 0 !important;
+  visibility: visible;
+  }
+  
+  #my-tooltip.show {
+  visibility: visible;
+  opacity: 1 !important;
+  }

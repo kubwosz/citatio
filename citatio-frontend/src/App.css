@@ -37,9 +37,17 @@
   }
 }
 
+.tooltip{
+  position: absolute;
+  inset: auto auto 0px 0px;
+  margin: 0px;
+  transform: translate3d(200px, -44.4px, 0px);
+}
 
 #my-tooltip {
-  transition: all 0.3s ease-in-out !important;
+  transition: all 2s ease-in-out !important;
+  transition-delay: 0.3;
+  transition-duration: 2s;
   opacity: 0 !important;
   visibility: visible;
   }

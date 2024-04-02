@@ -44,7 +44,11 @@
   transform: translate3d(200px, -44.4px, 0px);
 }
 
-#my-tooltip {
+.copy-clipboard-button:hover + #my-tooltip{
+  opacity: 1 !important;
+}
+
+/* #my-tooltip {
   transition: all 2s ease-in-out !important;
   transition-delay: 0.3;
   transition-duration: 2s;
@@ -55,4 +59,4 @@
   #my-tooltip.show {
   visibility: visible;
   opacity: 1 !important;
-  }
+  } */

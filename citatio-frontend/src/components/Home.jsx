@@ -69,7 +69,7 @@ const Home = (props) => {
   }
 
   return (
-    <div className="grid grid-rows-2 gap-4 font-myFont">
+    <div className="grid grid-rows-2 gap-4 w-screen h-screen">
       <div className="top-panel flex justify-center flex-col mt-5">
         <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
         <input
@@ -88,12 +88,12 @@ const Home = (props) => {
           Get DOI information
         </button>
       </div>
-      <div className="botton-panel grid grid-cols-3 ">
-        <div className="flex flex-col ">
-          <h2>Information about your DOI:</h2>
-          <div className="cit-type-buttons h-3/4">
+      <div className="botton-panel grid grid-cols-3 bottom-0">
+        <div className="flex flex-col gap-3">
+          <h1>Information about your DOI:</h1>
+          <div className="cit-type-buttons basis-3/4 w-1/2">
             {citations.map((btn, idx) => (
-              <div>
+              <div className="pb-5">
                 <button
                   key={btn.name}
                   onClick={() => setCitationActivityByIndex(idx)}
@@ -111,8 +111,8 @@ const Home = (props) => {
         <div>
           {citations.map((c) => {
             if(c.isActive){
-              return(<div>
-              <span class="label label-default uppercase">{c.type}</span>
+              return(<div className="flex flex-col pb-5">
+              <span className="label label-default uppercase">{c.type}</span>
                 <TextboxCitation citation={c.citation}/>
                 {console.log(c.citation)}
                 </div>)

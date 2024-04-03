@@ -29,8 +29,8 @@ const TextboxCitation = (props) => {
     }
 
     return (
-        <div class="relative mb-4">
-            <div class="w-full max-w-[16rem]">
+        <div>
+            <div class="w-full">
                 <div class="relative">
                     <label for="npm-install-copy-button" class="sr-only">Label</label>
                     <input id="npm-install-copy-button" type="text" class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" value={props.citation} disabled readonly />

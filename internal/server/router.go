@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"reflect"
+	"regexp"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -24,12 +25,21 @@ func setRouter() *gin.Engine {
 	api := router.Group("/api")
 	{
 		// Add /hello GET route to router and define route handler function
-		api.GET("/doi/*doi", func(ctx *gin.Context) {
-			doi := ctx.Param("doi")
-			paper := GetPaper(doi)
-			response := "cite_styles.GetReference(paper)" + paper.Doi
+		api.POST("/references", func(ctx *gin.Context) {
+			var dois models.DoiBody
+			if err := ctx.BindJSON(&dois); err != nil {
+				return
+			}
 
-			ctx.JSON(200, response)
+			re := regexp.MustCompile(`(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)`)
+			response := re.FindAllString((dois.Value), -1)
+
+			// paper := GetPaper("10.1111/febs.13307")
+			// method := reflect.ValueOf(references).MethodByName(t.Method(i).Name)
+			// reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
+			// response := reflectResponse[0].Interface()
+
+			ctx.JSON(200, response[0])
 		})
 
 		references := cite_styles.ReferenceSource{}

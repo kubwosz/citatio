@@ -22,15 +22,8 @@ const Home = (props) => {
   }, [populateFields]);
 
   async function submitHandler(event) {
-    let resAAA = await getDoiData("reference/aaa");
-    let resAPA = await getDoiData("reference/apa");
-    let resAPSA = await getDoiData("reference/apsa");
-    let resASA = await getDoiData("reference/asa");
-
-    setCitationByType("AAA", resAAA);
-    setCitationByType("APA", resAPA);
-    setCitationByType("APSA", resAPSA);
-    setCitationByType("ASA", resASA);
+    let resMany = await postGetDoiData("references");
+console.log(resMany);
 
     event.preventDefault();
   }
@@ -42,6 +35,15 @@ const Home = (props) => {
   async function getDoiData(url) {
     const response = await fetch("api/" + url + "/" + doiValue, {
       method: "GET",
+    });
+    let createdReference = await response.json();
+    return createdReference;
+  }
+
+  async function postGetDoiData(url) {
+    const response = await fetch("api/" + url, {
+      method: "POST",
+      body: JSON.stringify({ value: doiValue.toString() })
     });
     let createdReference = await response.json();
     return createdReference;

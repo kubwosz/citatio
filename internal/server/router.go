@@ -34,12 +34,28 @@ func setRouter() *gin.Engine {
 			re := regexp.MustCompile(`(10[.][0-9]{4,}[^\s"/<>]*/[^\s"<>]+)`)
 			response := re.FindAllString((dois.Value), -1)
 
+			var references []*models.ReferenceResponse
+
+			referenceSources := cite_styles.ReferenceSource{}
+			t := reflect.TypeOf(&referenceSources)
+
+			for i := 0; i < len(response); i++ {
+				for j := 0; j < t.NumMethod(); j++ {
+					refType := strings.ToLower(t.Method(i).Name)
+
+					paper := GetPaper(response[i])
+					method := reflect.ValueOf(referenceSources).MethodByName(t.Method(j).Name)
+					reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
+					referenceValue := reflectResponse[0].Interface().(string)
+					references = append(references, &models.ReferenceResponse{Order: i + j, Type: string(refType), Value: referenceValue})
+				}
+			}
 			// paper := GetPaper("10.1111/febs.13307")
 			// method := reflect.ValueOf(references).MethodByName(t.Method(i).Name)
 			// reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
 			// response := reflectResponse[0].Interface()
 
-			ctx.JSON(200, response[0])
+			ctx.JSON(200, references)
 		})
 
 		references := cite_styles.ReferenceSource{}

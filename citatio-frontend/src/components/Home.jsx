@@ -23,7 +23,7 @@ const Home = (props) => {
 
   async function submitHandler(event) {
     let resMany = await postGetDoiData("references");
-console.log(resMany);
+    console.log(resMany);
 
     event.preventDefault();
   }
@@ -89,22 +89,20 @@ console.log(resMany);
         >
           Get DOI information
         </button>
-      </div>
-      <div className="botton-panel grid grid-cols-3 bottom-0">
         <div className="flex flex-col gap-3">
-          <h1>Information about your DOI:</h1>
-          <div className="cit-type-buttons basis-3/4 w-1/2">
+          <h1>Citation type:</h1>
+          <div className="flex flex-row cit-type-buttons basis-3/4 items-end">
             {citations.map((btn, idx) => (
-              <div className="pb-5">
+              <div className="p-5">
                 <button
                   key={btn.name}
                   onClick={() => setCitationActivityByIndex(idx)}
                   className={
                     (btn.isActive ? "active " : "") +
-                    "[&.active]:bg-blue-400 bg-red-400 rounded px-2 py-2 m-2"
+                    "[&.active]:bg-blue-400 bg-red-400 rounded px-4 py-2 m-2"
                   }
                 >
-                  Citation type: {btn.type}
+                  {btn.type}
                 </button>
               </div>
             ))}
@@ -112,16 +110,20 @@ console.log(resMany);
         </div>
         <div>
           {citations.map((c) => {
-            if(c.isActive){
-              return(<div className="flex flex-col pb-5">
-              <span className="label label-default uppercase">{c.type}</span>
-                <TextboxCitation citation={c.citation}/>
-                {console.log(c.citation)}
-                </div>)
+            if (c.isActive) {
+              return (
+                <div className="flex flex-col pb-5">
+                  <span className="label label-default uppercase">{c.type}</span>
+                  <TextboxCitation citation={c.citation} />
+                </div>
+              )
             }
-          } 
+          }
           )}
         </div>
+      </div>
+      <div className="botton-panel grid grid-cols-3 bottom-0">
+        
       </div>
     </div>
   );

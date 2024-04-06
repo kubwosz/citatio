@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 import TextboxCitation from "./TextboxCitation"
+import InputTags from "./InputTags"
 
 const Home = (props) => {
   const [doiValue, setDoiValue] = useState("");
@@ -74,15 +75,10 @@ const Home = (props) => {
     <div className="grid grid-rows-2 gap-4 w-screen h-screen">
       <div className="top-panel flex justify-center flex-col mt-5">
         <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
-        <input
-          id="title"
-          className="block bg-rose-200 w-3/12 hover:bg-green-500 text-white py-2 rounded m-3 self-center"
-          placeholder=" DOI..."
-          type="text"
-          required
-          value={doiValue}
-          onChange={doiInputChangeHandler}
-        ></input>
+        <InputTags
+         doiValue={doiValue}
+         doiInputChangeHandler={doiInputChangeHandler}
+        />
         <button
           onClick={submitHandler}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"

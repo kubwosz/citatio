@@ -28,21 +28,21 @@ const InputTags = (props) => {
     };
 
     const inputChangeHandler = (data) => {
-        let dois = getDois(data.target.value);
-        console.log(dois);
-        if (dois?.length > 0) {
-            addTags(dois)
-            dois.map(doi => {
-                let inputToUpdate = inputValue.replace(doi, '');
-                setInputValue(inputToUpdate);
-            })
-        } else {
+        props.doiInputChangeHandler(data);
+        // if (dois?.length > 0) {
+        //     addTags(dois)
+        //     dois.map(doi => {
+        //         let inputToUpdate = inputValue.replace(doi, '');
+        //         setInputValue(inputToUpdate);
+        //     })
+        // } else {
             setInputValue(data.target.value);
-        }
     };
 
     const inputNoDoiChangeHandler = (data) => {
        console.log(bulkDoi);
+       let dois = getDois(data.target.value);
+       console.log(dois);
             setInputValue(data.target.value);
             if(isDoi(data.target.value)){
                 setIsInputValueDoi(true);
@@ -74,10 +74,10 @@ const InputTags = (props) => {
                 type="text"
                 required
                 value={inputValue}
-                onChange={inputNoDoiChangeHandler}
+                onChange={inputChangeHandler}
             />
             }
-            <label class="sticky left-0 cursor-pointer inline-block">
+            <label class="sticky left-0 cursor-pointer flex items-center">
   <input type="checkbox" value={bulkDoi} onChange={() => setBulkDoi(!bulkDoi)} className="sr-only peer"/>
   <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
   <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Bulk dois</span>

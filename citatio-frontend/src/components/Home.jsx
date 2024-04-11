@@ -26,6 +26,10 @@ const Home = (props) => {
     let resMany = await postGetDoiData("references");
     console.log(resMany);
 
+    resMany.map(r => {
+      setCitationByType(r.Type, r.Value);
+      console.log(r.Type, r.Value);
+    })
     event.preventDefault();
   }
 
@@ -63,7 +67,10 @@ const Home = (props) => {
 
   function setCitationByType(type, citation) {
     const nextCitations = citations.map((c) => {
-      if (c.type === type) {
+      console.log(c);
+      console.log(type);
+      console.log(c.type == type);
+      if (c.type.toLowerCase() == type.toLowerCase()) {
         c.citation = citation;
       }
       return c;
@@ -85,7 +92,10 @@ const Home = (props) => {
         >
           Get DOI information
         </button>
-        <div className="flex flex-col gap-3">
+        
+      </div>
+      <div className="botton-panel flex-row justify-center bottom-0">
+      <div className="flex flex-col gap-3">
           <h1>Citation type:</h1>
           <div className="flex flex-row cit-type-buttons basis-3/4 items-end">
             {citations.map((btn, idx) => (
@@ -117,9 +127,6 @@ const Home = (props) => {
           }
           )}
         </div>
-      </div>
-      <div className="botton-panel grid grid-cols-3 bottom-0">
-        
       </div>
     </div>
   );

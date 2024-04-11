@@ -38,16 +38,17 @@ func setRouter() *gin.Engine {
 
 			referenceSources := cite_styles.ReferenceSource{}
 			t := reflect.TypeOf(&referenceSources)
-
+			order := 0
 			for i := 0; i < len(response); i++ {
 				for j := 0; j < t.NumMethod(); j++ {
-					refType := strings.ToLower(t.Method(i).Name)
+					refType := strings.ToLower(t.Method(j).Name)
 
 					paper := GetPaper(response[i])
 					method := reflect.ValueOf(referenceSources).MethodByName(t.Method(j).Name)
 					reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
 					referenceValue := reflectResponse[0].Interface().(string)
-					references = append(references, &models.ReferenceResponse{Order: i + j, Type: string(refType), Value: referenceValue})
+					references = append(references, &models.ReferenceResponse{Order: order, Type: string(refType), Value: referenceValue})
+					order++
 				}
 			}
 			// paper := GetPaper("10.1111/febs.13307")

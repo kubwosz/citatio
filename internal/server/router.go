@@ -31,7 +31,7 @@ func setRouter() *gin.Engine {
 				return
 			}
 
-			re := regexp.MustCompile(`\b10\.(\d+\.*)+[\/](([^\s\.])+\.*)+\b`)
+			re := regexp.MustCompile(`10\.(\d+\.*)+[\/](([^\s\.])+\.*)+\b`)
 			response := re.FindAllString((dois.Value), -1)
 
 			var references []*models.ReferenceResponse

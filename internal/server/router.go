@@ -16,6 +16,15 @@ import (
 )
 
 //10.1111/febs.13307
+//10.1016/j.cell.2024.03.021
+//10.1016/0002-8703(88)90161-5
+//10.1016/S0140-6736(24)00367-2
+//10.1056/NEJMoa2310532
+//10.1016/j.cell.2024.03.025
+//10.1210/clinem/dgae256
+//10.1210/clinem/dgae256
+//DOI: 10.1210/clinem/dgae224
+//OI: 10.1210/clinem/dgae258
 
 func setRouter() *gin.Engine {
 	// Creates default gin router with Logger and Recovery middleware already attached

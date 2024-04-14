@@ -24,11 +24,8 @@ const Home = (props) => {
 
   async function submitHandler(event) {
     let resMany = await postGetDoiData("references");
-    console.log(resMany);
-
-    resMany.map(r => {
+    resMany?.map(r => {
       setCitationByType(r.Type, r.Value);
-      console.log(r.Type, r.Value);
     })
     event.preventDefault();
   }
@@ -46,9 +43,11 @@ const Home = (props) => {
   }
 
   async function postGetDoiData(url) {
+let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() : []);
+
     const response = await fetch("api/" + url, {
       method: "POST",
-      body: JSON.stringify({ value: doiValue.toString() })
+      body: JSON.stringify({ value: doiValue.toString(), citTypes: activeCitTypes})
     });
     let createdReference = await response.json();
     return createdReference;
@@ -67,10 +66,7 @@ const Home = (props) => {
 
   function setCitationByType(type, citation) {
     const nextCitations = citations.map((c) => {
-      console.log(c);
-      console.log(type);
-      console.log(c.type == type);
-      if (c.type.toLowerCase() == type.toLowerCase()) {
+      if (c?.type.toLowerCase() == type.toLowerCase()) {
         c.citation = citation;
       }
       return c;
@@ -83,19 +79,10 @@ const Home = (props) => {
       <div className="top-panel flex justify-center flex-col mt-5">
         <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
         <InputTags
-         doiValue={doiValue}
-         doiInputChangeHandler={doiInputChangeHandler}
+          doiValue={doiValue}
+          doiInputChangeHandler={doiInputChangeHandler}
         />
-        <button
-          onClick={submitHandler}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
-        >
-          Get DOI information
-        </button>
-        
-      </div>
-      <div className="botton-panel flex-row justify-center bottom-0">
-      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           <h1>Citation type:</h1>
           <div className="flex flex-row cit-type-buttons basis-3/4 items-end">
             {citations.map((btn, idx) => (
@@ -114,11 +101,19 @@ const Home = (props) => {
             ))}
           </div>
         </div>
-        <div>
+      </div>
+      <div className="botton-panel flex-row justify-center bottom-0">
+          <button
+            onClick={submitHandler}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
+          >
+            Get DOI information
+          </button>
+          <div>
           {citations.map((c) => {
             if (c.isActive) {
               return (
-                <div className="flex flex-col pb-5">
+                <div className="flex flex-col pb-5 items-center">
                   <span className="label label-default uppercase">{c.type}</span>
                   <TextboxCitation citation={c.citation} />
                 </div>
@@ -127,7 +122,7 @@ const Home = (props) => {
           }
           )}
         </div>
-      </div>
+        </div>
     </div>
   );
 };

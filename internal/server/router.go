@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"reflect"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -50,14 +51,17 @@ func setRouter() *gin.Engine {
 			order := 0
 			for i := 0; i < len(response); i++ {
 				for j := 0; j < t.NumMethod(); j++ {
-					refType := strings.ToLower(t.Method(j).Name)
+					if slices.Contains(dois.CitTypes, strings.ToLower(t.Method(j).Name)) {
 
-					paper := GetPaper(response[i])
-					method := reflect.ValueOf(referenceSources).MethodByName(t.Method(j).Name)
-					reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
-					referenceValue := reflectResponse[0].Interface().(string)
-					references = append(references, &models.ReferenceResponse{Order: order, Type: string(refType), Value: referenceValue})
-					order++
+						refType := strings.ToLower(t.Method(j).Name)
+
+						paper := GetPaper(response[i])
+						method := reflect.ValueOf(referenceSources).MethodByName(t.Method(j).Name)
+						reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
+						referenceValue := reflectResponse[0].Interface().(string)
+						references = append(references, &models.ReferenceResponse{Order: order, Type: string(refType), Value: referenceValue})
+						order++
+					}
 				}
 			}
 			// paper := GetPaper("10.1111/febs.13307")

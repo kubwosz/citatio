@@ -1,5 +1,6 @@
 package models
 
 type DoiBody struct {
-	Value string
+	Value    string
+	CitTypes []string
 }

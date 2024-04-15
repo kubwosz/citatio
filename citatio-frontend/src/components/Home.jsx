@@ -11,6 +11,7 @@ const Home = (props) => {
     { type: "APSA", isActive: false, citation: "APSADefault" },
     { type: "ASA", isActive: false, citation: "ASADefault" },
   ]);
+  const [doiNotFound, setDoiNotFound] = useState(false);
 
   const populateFields = useCallback(() => {
     if (props.post) {
@@ -49,6 +50,10 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
       method: "POST",
       body: JSON.stringify({ value: doiValue.toString(), citTypes: activeCitTypes})
     });
+    if(response.status !== 200){
+      setDoiNotFound(true);
+      return null;
+    }
     let createdReference = await response.json();
     return createdReference;
   }
@@ -75,7 +80,7 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
   }
 
   return (
-    <div className="grid grid-rows-2 gap-4 w-screen h-screen">
+    <div className="grid grid-rows-2 gap-16 w-screen h-screen">
       <div className="top-panel flex justify-center flex-col mt-5">
         <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
         <InputTags
@@ -103,12 +108,15 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
         </div>
       </div>
       <div className="botton-panel flex-row justify-center bottom-0">
+        <div className="flex-col pb-3">
           <button
             onClick={submitHandler}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
           >
             Get DOI information
           </button>
+          <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
+          </div>
           <div>
           {citations.map((c) => {
             if (c.isActive) {

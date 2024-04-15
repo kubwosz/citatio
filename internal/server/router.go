@@ -69,7 +69,11 @@ func setRouter() *gin.Engine {
 			// reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
 			// response := reflectResponse[0].Interface()
 
-			ctx.JSON(200, references)
+			if references == nil {
+				ctx.IndentedJSON(http.StatusNotFound, gin.H{"message": "doi not found"})
+			} else {
+				ctx.JSON(200, references)
+			}
 		})
 
 		references := cite_styles.ReferenceSource{}

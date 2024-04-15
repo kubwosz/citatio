@@ -29,7 +29,7 @@ const InputTags = (props) => {
 
     const inputChangeHandler = (data) => {
         props.doiInputChangeHandler(data);
-        setInputValue(data.target.value);
+        setInputValue(data.target.value.replace(/\s/g, ''));
         if (isDoi(data.target.value)) {
             setIsInputValueDoi(true);
         }

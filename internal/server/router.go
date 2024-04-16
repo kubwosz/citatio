@@ -76,6 +76,47 @@ func setRouter() *gin.Engine {
 			}
 		})
 
+		api.POST("/reference", func(ctx *gin.Context) {
+			var dois models.DoiBody
+			if err := ctx.BindJSON(&dois); err != nil {
+				return
+			}
+
+			re := regexp.MustCompile(`10\.(\d+\.*)+[\/](([^\s\.])+\.*)+\b`)
+			response := re.FindAllString((dois.Value), -1)
+
+			var references []*models.ReferenceResponse
+
+			referenceSources := cite_styles.ReferenceSource{}
+			t := reflect.TypeOf(&referenceSources)
+			order := 0
+			for i := 0; i < len(response); i++ {
+				for j := 0; j < t.NumMethod(); j++ {
+					if slices.Contains(dois.CitTypes, strings.ToLower(t.Method(j).Name)) {
+
+						refType := strings.ToLower(t.Method(j).Name)
+
+						paper := GetPaper(response[i])
+						method := reflect.ValueOf(referenceSources).MethodByName(t.Method(j).Name)
+						reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
+						referenceValue := reflectResponse[0].Interface().(string)
+						references = append(references, &models.ReferenceResponse{Order: order, Type: string(refType), Value: referenceValue})
+						order++
+					}
+				}
+			}
+			// paper := GetPaper("10.1111/febs.13307")
+			// method := reflect.ValueOf(references).MethodByName(t.Method(i).Name)
+			// reflectResponse := method.Call([]reflect.Value{reflect.ValueOf(paper)})
+			// response := reflectResponse[0].Interface()
+
+			if references == nil {
+				ctx.IndentedJSON(http.StatusNotFound, gin.H{"message": "doi not found"})
+			} else {
+				ctx.JSON(200, references)
+			}
+		})
+
 		references := cite_styles.ReferenceSource{}
 		t := reflect.TypeOf(&references)
 

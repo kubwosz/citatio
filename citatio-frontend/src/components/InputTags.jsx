@@ -39,9 +39,10 @@ const InputTags = (props) => {
     };
 
     const inputDoiBulkChangeHandler = (data) => {
-        console.log(bulkDoi);
         let dois = getDois(data.target.value);
+        console.log(dois);
         setInputValue(data.target.value);
+        props.doiInputChangeHandler(data);
     };
 
     return (
@@ -57,7 +58,6 @@ const InputTags = (props) => {
                     className={`resize-y max-h-32 min-h-12 block self-center bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block`}
                     placeholder=" DOIs..."
                     type="text"
-                    required
                     value={inputValue}
                     onChange={inputDoiBulkChangeHandler}
                 />

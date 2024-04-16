@@ -80,8 +80,8 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
   }
 
   return (
-    <div className="grid grid-rows-2 gap-16 w-screen h-screen">
-      <div className="top-panel flex justify-center flex-col mt-5">
+    <div className="grid grid-cols-2 gap-16 w-screen h-screen">
+      <div className="top-panel flex content-center flex-col mt-5">
         <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
         <InputTags
           doiValue={doiValue}
@@ -106,8 +106,6 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
             ))}
           </div>
         </div>
-      </div>
-      <div className="botton-panel flex-row justify-center bottom-0">
         <div className="flex-col pb-3">
           <button
             onClick={submitHandler}
@@ -117,6 +115,8 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
           </button>
           <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
           </div>
+      </div>
+      <div className="botton-panel flex-row justify-center pt-16">
           <div>
           {citations.map((c) => {
             if (c.isActive) {

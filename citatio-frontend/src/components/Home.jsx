@@ -80,7 +80,16 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
   }
 
   return (
-    <div className="grid grid-cols-2 gap-16 w-screen h-screen">
+    <div className="grid grid-rows-3 gap-12 w-screen h-screen">
+      <div className="top-nav-bar flex h-1/10 justify-between">
+<div className="justify-self-start">
+  <span class="dot"></span> CITATIO</div>
+  <div className="flex-col place-self-center"> <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+      </ul> </div>
+      </div>
+      
       <div className="top-panel flex content-center flex-col mt-5">
         <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
         <InputTags

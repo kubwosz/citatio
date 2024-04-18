@@ -44,13 +44,13 @@ const Home = (props) => {
   }
 
   async function postGetDoiData(url) {
-let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() : []);
+    let activeCitTypes = citations.flatMap(c => c.isActive ? c.type.toLowerCase() : []);
 
     const response = await fetch("api/" + url, {
       method: "POST",
-      body: JSON.stringify({ value: doiValue.toString(), citTypes: activeCitTypes})
+      body: JSON.stringify({ value: doiValue.toString(), citTypes: activeCitTypes })
     });
-    if(response.status !== 200){
+    if (response.status !== 200) {
       setDoiNotFound(true);
       return null;
     }
@@ -80,16 +80,21 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
   }
 
   return (
-    <div className="grid grid-rows-3 gap-12 w-screen h-screen">
-      <div className="top-nav-bar flex h-1/10 justify-between">
-<div className="justify-self-start">
-  <span class="dot"></span> CITATIO</div>
-  <div className="flex-col place-self-center"> <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-      </ul> </div>
+    <div className="grid grid-rows-8 gap-12 w-screen h-screen bg-orange-100">
+      <div className="col-span-1 top-nav-bar grid grid-cols-3 gp-2 h-1/10 justify-between bg-orange-100 border-b-4 border-b-indigo-500">
+        <ul className="flex justify-start border-r-4 border-r-indigo-500">
+          <li className="m-3"><a href="#">Home</a></li>
+        </ul>
+        <div className="m-3">
+          <span class="dot"></span>
+          CITATIO
+
+        </div >
+        <ul className="flex justify-end border-l-4 border-l-indigo-500">
+          <li className="m-3"><a href="#">About</a></li>
+        </ul>
       </div>
-      
+
       <div className="top-panel flex content-center flex-col mt-5">
         <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
         <InputTags
@@ -123,10 +128,10 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
             Get DOI information
           </button>
           <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
-          </div>
+        </div>
       </div>
       <div className="botton-panel flex-row justify-center pt-16">
-          <div>
+        <div>
           {citations.map((c) => {
             if (c.isActive) {
               return (
@@ -139,7 +144,7 @@ let activeCitTypes =  citations.flatMap(c => c.isActive ? c.type.toLowerCase() :
           }
           )}
         </div>
-        </div>
+      </div>
     </div>
   );
 };

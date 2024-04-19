@@ -80,23 +80,35 @@ const Home = (props) => {
   }
 
   return (
-    <div className="grid grid-rows-8 gap-12 w-screen h-screen bg-orange-100">
-      <div className="col-span-1 top-nav-bar grid grid-cols-3 gp-2 h-1/10 justify-between bg-orange-100 border-b-4 border-b-indigo-500">
-        <ul className="flex justify-start border-r-4 border-r-indigo-500">
-          <li className="m-3"><a href="#">Home</a></li>
+    <div className="w-screen h-screen bg-orange-50">
+      <div className="top-nav-bar grid grid-cols-3 gp-2 justify-between border-b-4 border-stone-400">
+        <ul className="flex justify-start border-r-4 border-r-stone-400">
+          <li className="m-3 align-center"><a href="#">Home</a></li>
         </ul>
         <div className="m-3">
           <span class="dot"></span>
           CITATIO
 
         </div >
-        <ul className="flex justify-end border-l-4 border-l-indigo-500">
+        <ul className="flex justify-end border-l-4 border-l-stone-400">
           <li className="m-3"><a href="#">About</a></li>
         </ul>
       </div>
 
-      <div className="top-panel flex content-center flex-col mt-5">
-        <h1 className="max-w-40 self-center p-2 mt-10">Put here your DOI: </h1>
+      <div className="h-1/2 top-panel flex items-center justify-center space-around flex-col mt-5">
+        <div className="border-4 border-stone-300 h-1/2 w-1/3">
+        <input
+                    id="title"
+                    className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
+                    placeholder=" DOI..."
+                    type="text"
+                />
+        <input
+                    id="title"
+                    className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
+                    placeholder=" DOI..."
+                    type="text"
+                />
         <InputTags
           doiValue={doiValue}
           doiInputChangeHandler={doiInputChangeHandler}
@@ -123,11 +135,12 @@ const Home = (props) => {
         <div className="flex-col pb-3">
           <button
             onClick={submitHandler}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
+            className="bg-stone-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
           >
-            Get DOI information
+            New Citation
           </button>
           <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
+        </div>
         </div>
       </div>
       <div className="botton-panel flex-row justify-center pt-16">

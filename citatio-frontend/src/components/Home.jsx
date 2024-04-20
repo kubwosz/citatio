@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 import TextboxCitation from "./TextboxCitation"
+import CustomDropdown from "./CustomDropdown"
 import InputTags from "./InputTags"
 
 const Home = (props) => {
@@ -115,22 +116,7 @@ const Home = (props) => {
         />
         <div className="flex flex-col gap-3">
           <h1>Citation type:</h1>
-          <div className="flex flex-row cit-type-buttons basis-3/4 items-end">
-            {citations.map((btn, idx) => (
-              <div className="p-5">
-                <button
-                  key={btn.name}
-                  onClick={() => setCitationActivityByIndex(idx)}
-                  className={
-                    (btn.isActive ? "active " : "") +
-                    "[&.active]:bg-blue-400 bg-red-400 rounded px-4 py-2 m-2"
-                  }
-                >
-                  {btn.type}
-                </button>
-              </div>
-            ))}
-          </div>
+          <CustomDropdown/>
         </div>
         <div className="flex-col pb-3">
           <button

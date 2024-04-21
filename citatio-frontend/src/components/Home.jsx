@@ -97,7 +97,7 @@ const Home = (props) => {
       </div>
 
       <div className="h-1/2 top-panel flex items-center justify-center space-around flex-col mt-5">
-        <div className="border-4 border-stone-300 h-1/2 w-1/3">
+        <div className="border-4 border-stone-300 h-3/4 w-1/3">
         <input
                     id="title"
                     className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
@@ -114,9 +114,8 @@ const Home = (props) => {
           doiValue={doiValue}
           doiInputChangeHandler={doiInputChangeHandler}
         />
-        <div className="flex flex-col gap-3">
-          <h1>Citation type:</h1>
-          <CustomDropdown/>
+        <div className="flex flex-col">
+          <CustomDropdown citations={citations} inputInfo="Citation Type"/>
         </div>
         <div className="flex-col pb-3">
           <button

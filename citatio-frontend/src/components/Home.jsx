@@ -96,51 +96,50 @@ const Home = (props) => {
         </ul>
       </div>
 
-      <div className="h-1/2 top-panel flex items-center justify-center space-around flex-col mt-5">
+      <div className="h-1/2 top-panel flex items-center justify-center">
         <div className="border-4 border-stone-300 h-3/4 w-1/3">
-        <input
-                    id="title"
-                    className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
-                    placeholder=" DOI..."
-                    type="text"
-                />
-        <input
-                    id="title"
-                    className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
-                    placeholder=" DOI..."
-                    type="text"
-                />
-        <InputTags
-          doiValue={doiValue}
-          doiInputChangeHandler={doiInputChangeHandler}
-        />
-        <div className="flex flex-col">
-          <CustomDropdown citations={citations} inputInfo="Citation Type"/>
-        </div>
-        <div className="flex-col pb-3">
-          <button
-            onClick={submitHandler}
-            className="bg-stone-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
-          >
-            New Citation
-          </button>
-          <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
-        </div>
+          <input
+            id="title"
+            className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
+            placeholder=" DOI..."
+            type="text"
+          />
+          <input
+            id="title"
+            className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
+            placeholder=" DOI..."
+            type="text"
+          />
+          <InputTags
+            doiValue={doiValue}
+            doiInputChangeHandler={doiInputChangeHandler}
+          />
+          <div className="flex flex-col space-around">
+            <CustomDropdown citations={citations} inputInfo="Citation Type" />
+            <CustomDropdown citations={citations} inputInfo="Type of enumeration" />
+          </div>
+          <div className="flex-col pb-3">
+            <button
+              onClick={submitHandler}
+              className="bg-stone-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
+            >
+              New Citation
+            </button>
+            <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
+          </div>
         </div>
       </div>
-      <div className="botton-panel flex-row justify-center pt-16">
-        <div>
-          {citations.map((c) => {
-            if (c.isActive) {
-              return (
-                <div className="flex flex-col pb-5 items-center">
-                  <span className="label label-default uppercase">{c.type}</span>
-                  <TextboxCitation citation={c.citation} />
-                </div>
-              )
-            }
-          }
-          )}
+      <div className=" h-1/3 botton-panel flex justify-center">
+        <div className="h-7/8 w-1/2 border-4 border-stone-400">
+              <div className="flex flex-col pb-5 items-center">
+                <textarea
+                  id="title"
+                  className={`h-full w-full max-h-48 block self-center bg-amber-100 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block readonly blocked disabled`}
+                  placeholder=" DOIs..."
+                  type="text"
+                  value={citations.map(c => c.citation + "\n").join('1.')}
+                />
+              </div>
         </div>
       </div>
     </div>

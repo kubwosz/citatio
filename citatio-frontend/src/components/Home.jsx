@@ -12,6 +12,11 @@ const Home = (props) => {
     { type: "APSA", isActive: false, citation: "APSADefault" },
     { type: "ASA", isActive: false, citation: "ASADefault" },
   ]);
+  const [typesOfEnumeration, setTypesOfEnumerations] = useState([
+    { type: "Dot" },
+    { type: "Number" },
+  ]);
+
   const [doiNotFound, setDoiNotFound] = useState(false);
 
   const populateFields = useCallback(() => {
@@ -115,8 +120,8 @@ const Home = (props) => {
             doiInputChangeHandler={doiInputChangeHandler}
           />
           <div className="flex flex-col space-around">
-            <CustomDropdown citations={citations} inputInfo="Citation Type" />
-            <CustomDropdown citations={citations} inputInfo="Type of enumeration" />
+            <CustomDropdown values={citations} changeHandler={setCitations} inputInfo="Citation Type" />
+            <CustomDropdown values={typesOfEnumeration} changeHandler={setTypesOfEnumerations} inputInfo="Type of enumeration" />
           </div>
           <div className="flex-col pb-3">
             <button

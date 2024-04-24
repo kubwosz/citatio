@@ -13,8 +13,8 @@ const Home = (props) => {
     { type: "ASA", isActive: false, citation: "ASADefault" },
   ]);
   const [typesOfEnumeration, setTypesOfEnumerations] = useState([
-    { type: "Dot" },
-    { type: "Number" },
+    { type: "Dot", isActive: true },
+    { type: "Number", isActive: true },
   ]);
 
   const [doiNotFound, setDoiNotFound] = useState(false);
@@ -85,6 +85,17 @@ const Home = (props) => {
     setCitations(nextCitations);
   }
 
+  function setTypesOfEnumerationsIsActive(index) {
+    const next = citations.map((btn, i) => {
+      if (i === index) {
+        btn.isActive = !btn.isActive;
+      }
+
+      return btn;
+    });
+    setTypesOfEnumerations(next);
+  }
+
   return (
     <div className="w-screen h-screen bg-orange-50">
       <div className="top-nav-bar grid grid-cols-3 gp-2 justify-between border-b-4 border-stone-400">
@@ -120,8 +131,8 @@ const Home = (props) => {
             doiInputChangeHandler={doiInputChangeHandler}
           />
           <div className="flex flex-col space-around">
-            <CustomDropdown values={citations} changeHandler={setCitations} inputInfo="Citation Type" />
-            <CustomDropdown values={typesOfEnumeration} changeHandler={setTypesOfEnumerations} inputInfo="Type of enumeration" />
+            <CustomDropdown values={citations} changeHandler={setCitationActivityByIndex} inputInfo="Citation Type" />
+            <CustomDropdown values={typesOfEnumeration} changeHandler={setTypesOfEnumerationsIsActive} inputInfo="Type of enumeration" />
           </div>
           <div className="flex-col pb-3">
             <button

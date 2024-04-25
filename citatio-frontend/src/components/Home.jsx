@@ -7,15 +7,17 @@ const Home = (props) => {
   const [doiValue, setDoiValue] = useState("");
   const [doiData, setDoiData] = useState("");
   const [citations, setCitations] = useState([
-    { type: "AAA", isActive: false, citation: "AAADefault" },
-    { type: "APA", isActive: false, citation: "APADefault" },
-    { type: "APSA", isActive: false, citation: "APSADefault" },
-    { type: "ASA", isActive: false, citation: "ASADefault" },
+    { type: "AAA", isActive: true, citation: "AAADefault" },
+    { type: "APA", isActive: true, citation: "APADefault" },
+    { type: "APSA", isActive: true, citation: "APSADefault" },
+    { type: "ASA", isActive: true, citation: "ASADefault" },
   ]);
   const [typesOfEnumeration, setTypesOfEnumerations] = useState([
     { type: "Dot", isActive: true },
     { type: "Number", isActive: true },
   ]);
+  const [citationType, setCitationType] = useState();
+  const [enumerationType, setEnumerationType] = useState();
 
   const [doiNotFound, setDoiNotFound] = useState(false);
 
@@ -65,6 +67,7 @@ const Home = (props) => {
   }
 
   function setCitationActivityByIndex(index) {
+    console.log(3);
     const nextActivityButtons = citations.map((btn, i) => {
       if (i === index) {
         btn.isActive = !btn.isActive;
@@ -76,6 +79,7 @@ const Home = (props) => {
   }
 
   function setCitationByType(type, citation) {
+    console.log(2);
     const nextCitations = citations.map((c) => {
       if (c?.type.toLowerCase() == type.toLowerCase()) {
         c.citation = citation;
@@ -85,15 +89,10 @@ const Home = (props) => {
     setCitations(nextCitations);
   }
 
-  function setTypesOfEnumerationsIsActive(index) {
-    const next = citations.map((btn, i) => {
-      if (i === index) {
-        btn.isActive = !btn.isActive;
-      }
-
-      return btn;
-    });
-    setTypesOfEnumerations(next);
+  const createResponses = () => {
+    console.log(1);
+    console.log(citationType);
+    return  citations.map((c, idx) => idx+1 + "."+ c.citation + "\n").join("");
   }
 
   return (
@@ -131,8 +130,8 @@ const Home = (props) => {
             doiInputChangeHandler={doiInputChangeHandler}
           />
           <div className="flex flex-col space-around">
-            <CustomDropdown values={citations} changeHandler={setCitationActivityByIndex} inputInfo="Citation Type" />
-            <CustomDropdown values={typesOfEnumeration} changeHandler={setTypesOfEnumerationsIsActive} inputInfo="Type of enumeration" />
+            <CustomDropdown values={citations} changeHandler={setCitationType} inputInfo={citationType ?? "Citation Type"} />
+            <CustomDropdown values={typesOfEnumeration} changeHandler={setEnumerationType} inputInfo={enumerationType ?? "Type of enumeration"} />
           </div>
           <div className="flex-col pb-3">
             <button
@@ -153,7 +152,7 @@ const Home = (props) => {
                   className={`h-full w-full max-h-48 block self-center bg-amber-100 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block readonly blocked disabled`}
                   placeholder=" DOIs..."
                   type="text"
-                  value={citations.map(c => c.citation + "\n").join('1.')}
+                  value={createResponses()}
                 />
               </div>
         </div>

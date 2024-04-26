@@ -90,9 +90,12 @@ const Home = (props) => {
   }
 
   const createResponses = () => {
-    console.log(1);
-    console.log(citationType);
-    return  citations.map((c, idx) => idx+1 + "."+ c.citation + "\n").join("");
+    if(enumerationType === "Number"){
+      return citations.map((c, idx) => <h3> {idx+1 + ". "+ c.citation + "\n"} </h3>) ;
+    }
+    else if(enumerationType === "Dot"){
+      return citations.map((c) => <h3>&bull;  {c.citation} </h3>);
+    }
   }
 
   return (
@@ -111,7 +114,7 @@ const Home = (props) => {
         </ul>
       </div>
 
-      <div className="h-1/2 top-panel flex items-center justify-center">
+      <div className="h-1/2 top-panel flex items-center justify-center"> 
         <div className="border-4 border-stone-300 h-3/4 w-1/3">
           <input
             id="title"
@@ -145,15 +148,9 @@ const Home = (props) => {
         </div>
       </div>
       <div className=" h-1/3 botton-panel flex justify-center">
-        <div className="h-7/8 w-1/2 border-4 border-stone-400">
-              <div className="flex flex-col pb-5 items-center">
-                <textarea
-                  id="title"
-                  className={`h-full w-full max-h-48 block self-center bg-amber-100 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block readonly blocked disabled`}
-                  placeholder=" DOIs..."
-                  type="text"
-                  value={createResponses()}
-                />
+        <div className="h-7/8 w-3/4 border-4 border-stone-400">
+              <div className="flex flex-col pb-5 items-start justify-start bg-amber-100 hover:bg-amber-200">
+                {doiValue ? createResponses() : "DOIs..."}
               </div>
         </div>
       </div>

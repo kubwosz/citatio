@@ -116,18 +116,6 @@ const Home = (props) => {
 
       <div className="h-1/2 top-panel flex items-center justify-center"> 
         <div className="border-4 border-stone-300 h-3/4 w-1/3">
-          <input
-            id="title"
-            className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
-            placeholder=" DOI..."
-            type="text"
-          />
-          <input
-            id="title"
-            className="block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block"
-            placeholder=" DOI..."
-            type="text"
-          />
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
@@ -149,8 +137,8 @@ const Home = (props) => {
       </div>
       <div className=" h-1/3 botton-panel flex justify-center">
         <div className="h-7/8 w-3/4 border-4 border-stone-400">
-              <div className="flex flex-col pb-5 items-start justify-start bg-amber-100 hover:bg-amber-200">
-                {doiValue ? createResponses() : "DOIs..."}
+              <div className="flex flex-col h-full w-full pb-5 items-start justify-start bg-stone-300 hover:bg-stone-200">
+                {doiValue ? createResponses() : " DOIs..."}
               </div>
         </div>
       </div>

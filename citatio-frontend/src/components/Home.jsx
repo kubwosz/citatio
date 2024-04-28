@@ -2,6 +2,7 @@ import { useState, useContext, useEffect, useCallback } from "react";
 import TextboxCitation from "./TextboxCitation"
 import CustomDropdown from "./CustomDropdown"
 import InputTags from "./InputTags"
+import { FormProvider, useForm } from 'react-hook-form'
 
 const Home = (props) => {
   const [doiValue, setDoiValue] = useState("");
@@ -115,7 +116,8 @@ const Home = (props) => {
       </div>
 
       <div className="h-1/2 top-panel flex items-center justify-center"> 
-        <div className="border-4 border-stone-300 h-3/4 w-1/3">
+      <FormProvider>
+        <form onSubmit={e => e.preventDefault()} className="border-4 border-stone-300 h-3/4 w-1/3">
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
@@ -133,7 +135,8 @@ const Home = (props) => {
             </button>
             <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
           </div>
-        </div>
+        </form>
+        </FormProvider>
       </div>
       <div className=" h-1/3 botton-panel flex justify-center">
         <div className="h-7/8 w-3/4 border-4 border-stone-400">

@@ -18,7 +18,9 @@ const Home = (props) => {
     { type: "Number", isActive: true },
   ]);
   const [citationType, setCitationType] = useState();
+  const [citationTypeChanged, setCitationTypeChanged] = useState(false);
   const [enumerationType, setEnumerationType] = useState();
+  const [enumerationTypeChanged, setEnumerationTypeChanged] = useState(false);
 
   const [doiNotFound, setDoiNotFound] = useState(false);
 
@@ -99,6 +101,24 @@ const Home = (props) => {
     }
   }
 
+  const methods = useForm()
+
+  const onSubmit = methods.handleSubmit(data => {
+    console.log(data)
+    console.log(citationTypeChanged)
+    console.log(enumerationTypeChanged)
+  })
+
+  const setCitationTypeCustom = (e) => {
+    setCitationType(e);
+    setCitationTypeChanged(true);
+  }
+
+  const setEnumerationTypeCustom = (e) => {
+    setEnumerationType(e);
+    setEnumerationTypeChanged(true);
+  }
+
   return (
     <div className="w-screen h-screen bg-orange-50">
       <div className="top-nav-bar grid grid-cols-3 gp-2 justify-between border-b-4 border-stone-400">
@@ -117,19 +137,20 @@ const Home = (props) => {
 
       <div className="h-1/2 top-panel flex items-center justify-center"> 
       <FormProvider>
-        <form onSubmit={e => e.preventDefault()} className="border-4 border-stone-300 h-3/4 w-1/3">
+        <form onSubmit={e => e.preventDefault()} noValidate className="border-4 border-stone-300 h-3/4 w-1/3">
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
           />
           <div className="flex flex-col space-around">
-            <CustomDropdown values={citations} changeHandler={setCitationType} inputInfo={citationType ?? "Citation Type"} />
-            <CustomDropdown values={typesOfEnumeration} changeHandler={setEnumerationType} inputInfo={enumerationType ?? "Type of enumeration"} />
+            <CustomDropdown values={citations} changeHandler={setCitationTypeCustom} inputInfo={citationType ?? "Citation Type"} />
+            <CustomDropdown values={typesOfEnumeration} changeHandler={setEnumerationTypeCustom} inputInfo={enumerationType ?? "Type of enumeration"} />
           </div>
           <div className="flex-col pb-3">
             <button
-              onClick={submitHandler}
-              className="bg-stone-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
+              onClick={onSubmit}
+              disabled={!enumerationTypeChanged || !citationTypeChanged}
+              className="bg-stone-500 hover:enabled:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
             >
               New Citation
             </button>

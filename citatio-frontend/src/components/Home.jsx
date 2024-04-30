@@ -2,7 +2,7 @@ import { useState, useContext, useEffect, useCallback } from "react";
 import TextboxCitation from "./TextboxCitation"
 import CustomDropdown from "./CustomDropdown"
 import InputTags from "./InputTags"
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, useForm, useFormContext } from 'react-hook-form'
 
 const Home = (props) => {
   const [doiValue, setDoiValue] = useState("");
@@ -59,7 +59,7 @@ const Home = (props) => {
 
     const response = await fetch("api/" + url, {
       method: "POST",
-      body: JSON.stringify({ value: doiValue.toString(), citTypes: activeCitTypes })
+      body: JSON.stringify({ value: doiValue.toString(), citType: citationType })
     });
     if (response.status !== 200) {
       setDoiNotFound(true);
@@ -119,6 +119,11 @@ const Home = (props) => {
     setEnumerationTypeChanged(true);
   }
 
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
+
   return (
     <div className="w-screen h-screen bg-orange-50">
       <div className="top-nav-bar grid grid-cols-3 gp-2 justify-between border-b-4 border-stone-400">
@@ -141,6 +146,12 @@ const Home = (props) => {
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
+            {...register("label", {
+              required: {
+                value: true,
+                message: 'required',
+              },
+            })}
           />
           <div className="flex flex-col space-around">
             <CustomDropdown values={citations} changeHandler={setCitationTypeCustom} inputInfo={citationType ?? "Citation Type"} />
@@ -148,9 +159,9 @@ const Home = (props) => {
           </div>
           <div className="flex-col pb-3">
             <button
-              onClick={onSubmit}
+              onClick={e => submitHandler(e)}
               disabled={!enumerationTypeChanged || !citationTypeChanged}
-              className="bg-stone-500 hover:enabled:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
+              className="bg-black/20 enabled:bg-stone-500 hover:enabled:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
             >
               New Citation
             </button>

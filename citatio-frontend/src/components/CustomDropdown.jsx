@@ -7,6 +7,7 @@ const CustomDropdown = (props) => {
     const [bulkDoi, setBulkDoi] = useState(false);
     const [isInputValueDoi, setIsInputValueDoi] = useState(false);
 
+    
     return (
         <div className="pt-3">
             <Menu as="div" className="relative inline-block text-left">

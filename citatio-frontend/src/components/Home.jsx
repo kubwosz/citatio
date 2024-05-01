@@ -119,10 +119,10 @@ const Home = (props) => {
     setEnumerationTypeChanged(true);
   }
 
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext()
+  // const {
+  //   register,
+  //   formState: { errors },
+  // } = useFormContext()
 
   return (
     <div className="w-screen h-screen bg-orange-50">
@@ -141,18 +141,14 @@ const Home = (props) => {
       </div>
 
       <div className="h-1/2 top-panel flex items-center justify-center"> 
-      <FormProvider>
+      <FormProvider {...methods}>
         <form onSubmit={e => e.preventDefault()} noValidate className="border-4 border-stone-300 h-3/4 w-1/3">
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
-            {...register("label", {
-              required: {
-                value: true,
-                message: 'required',
-              },
-            })}
+            
           />
+          {/* <input {...register( "validation")} /> */}
           <div className="flex flex-col space-around">
             <CustomDropdown values={citations} changeHandler={setCitationTypeCustom} inputInfo={citationType ?? "Citation Type"} />
             <CustomDropdown values={typesOfEnumeration} changeHandler={setEnumerationTypeCustom} inputInfo={enumerationType ?? "Type of enumeration"} />

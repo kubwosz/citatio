@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FormProvider, useForm, useFormContext } from 'react-hook-form'
+import { isFormInvalid, findInputError } from './isFormInvalid'
 
 const InputTags = (props) => {
     const [tags, setTags] = useState([]);
@@ -45,6 +47,15 @@ const InputTags = (props) => {
         props.doiInputChangeHandler(data);
     };
 
+    const {
+        register,
+        formState: { errors },
+      } = useFormContext()
+    const isInvalid = isFormInvalid(inputErrors)
+    const inputErrors = findInputError(errors, "title")
+
+
+
     return (
         <div className="flex flex-row justify-center relative">
             {/* <div className="absolute z-2">
@@ -70,6 +81,12 @@ const InputTags = (props) => {
                     required
                     value={inputValue}
                     onChange={inputChangeHandler}
+                    {...register("title", {
+                        required: {
+                          value: true,
+                          message: 'required',
+                        },
+                      })}
                 />
             }
             <label class="sticky left-0 cursor-pointer flex items-center">

@@ -146,7 +146,6 @@ const Home = (props) => {
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
-            
           />
           {/* <input {...register( "validation")} /> */}
           <div className="flex flex-col space-around">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormProvider, useForm, useFormContext } from 'react-hook-form'
 import { isFormInvalid, findInputError } from './isFormInvalid'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const InputTags = (props) => {
     const [tags, setTags] = useState([]);
@@ -51,9 +52,8 @@ const InputTags = (props) => {
         register,
         formState: { errors },
       } = useFormContext()
-    const isInvalid = isFormInvalid(inputErrors)
     const inputErrors = findInputError(errors, "title")
-
+    const isInvalid = isFormInvalid(inputErrors)
 
 
     return (
@@ -63,6 +63,15 @@ const InputTags = (props) => {
                     <span className=" border-2 rounded-sm border-red-950">{tag}</span>
                 ))}
             </div> */}
+              <AnimatePresence mode="wait" initial={false}>
+          {isInvalid && (
+            <InputError
+              message={"inputErrors.error.message"}
+              key={"inputErrors.error.message"}
+            />
+          )}
+                  </AnimatePresence>
+
             {bulkDoi ?
                 <textarea
                     id="title"
@@ -99,3 +108,23 @@ const InputTags = (props) => {
 };
 
 export default InputTags;
+
+
+
+const InputError = ({ message }) => {
+    return (
+      <motion.p
+        className="flex items-center gap-1 px-2 font-semibold text-red-500 bg-red-100 rounded-md"
+        {...framer_error}
+      >
+        {message}
+      </motion.p>
+    )
+  }
+
+  const framer_error = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 10 },
+    transition: { duration: 0.2 },
+  }

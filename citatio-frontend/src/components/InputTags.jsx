@@ -55,7 +55,6 @@ const InputTags = (props) => {
     const inputErrors = findInputError(errors, "title")
     const isInvalid = isFormInvalid(inputErrors)
 
-
     return (
         <div className="flex flex-row justify-center relative">
             {/* <div className="absolute z-2">

@@ -103,10 +103,11 @@ const Home = (props) => {
 
   const methods = useForm()
 
-  const onSubmit = methods.handleSubmit(data => {
+  const onSubmit = e => methods.handleSubmit(data => {
     console.log(data)
     console.log(citationTypeChanged)
     console.log(enumerationTypeChanged)
+    submitHandler(e);
   })
 
   const setCitationTypeCustom = (e) => {
@@ -154,7 +155,7 @@ const Home = (props) => {
           </div>
           <div className="flex-col pb-3">
             <button
-              onClick={e => submitHandler(e)}
+              onClick={onSubmit}
               disabled={!enumerationTypeChanged || !citationTypeChanged}
               className="bg-black/20 enabled:bg-stone-500 hover:enabled:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
             >

@@ -13,5 +13,8 @@ Paste multiple DOIs and let Citatio find them and parse for you
 ## AAA
 ## APA
 
+# More features:
+- Different enumerating types
+
 
 

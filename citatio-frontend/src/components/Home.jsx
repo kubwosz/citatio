@@ -126,24 +126,25 @@ const Home = (props) => {
   // } = useFormContext()
 
   return (
-    <div className="w-screen h-screen bg-orange-50">
-      <div className="top-nav-bar grid grid-cols-3 gp-2 justify-between border-b-4 border-stone-400">
-        <ul className="flex justify-start border-r-4 border-r-stone-400">
-          <li className="m-3 align-center"><a href="#">Home</a></li>
-        </ul>
-        <div className="m-3">
+    <div className="w-screen h-screen bg-slate-700">
+      <div className="top-nav-bar grid grid-cols-2 gp-2 border-b border-slate-50 text-slate-100">
+       
+        <div className="place-self-start p-3">
           <span class="dot"></span>
           CITATIO
 
-        </div >
-        <ul className="flex justify-end border-l-4 border-l-stone-400">
+        </div>
+        <div className="border-l border-l-slate-50 place-self-end">
+        <ul>
           <li className="m-3"><a href="#">About</a></li>
         </ul>
+        </div>
       </div>
 
-      <div className="h-1/2 top-panel flex items-center justify-center"> 
+<div className="h-5/6 main-page grid grid-cols-2">
+      <div className="left-panel flex justify-center items-center"> 
       <FormProvider {...methods}>
-        <form onSubmit={e => e.preventDefault()} noValidate className="border-4 border-stone-300 h-3/4 w-1/3">
+        <form onSubmit={e => e.preventDefault()} noValidate className="border-4 border-stone-300">
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
@@ -153,7 +154,7 @@ const Home = (props) => {
             <CustomDropdown values={citations} changeHandler={setCitationTypeCustom} inputInfo={citationType ?? "Citation Type"} />
             <CustomDropdown values={typesOfEnumeration} changeHandler={setEnumerationTypeCustom} inputInfo={enumerationType ?? "Type of enumeration"} />
           </div>
-          <div className="flex-col pb-3">
+          <div className="flex-col">
             <button
               onClick={onSubmit}
               disabled={!enumerationTypeChanged || !citationTypeChanged}
@@ -166,12 +167,13 @@ const Home = (props) => {
         </form>
         </FormProvider>
       </div>
-      <div className=" h-1/3 botton-panel flex justify-center">
-        <div className="h-7/8 w-3/4 border-4 border-stone-400">
+      <div className="right-panel flex justify-center">
+        <div className="w-3/4 border-4 border-stone-400">
               <div className="flex flex-col h-full w-full pb-5 items-start justify-start bg-stone-300 hover:bg-stone-200">
                 {doiValue ? createResponses() : " DOIs..."}
               </div>
         </div>
+      </div>
       </div>
     </div>
   );

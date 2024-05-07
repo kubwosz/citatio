@@ -160,7 +160,7 @@ const Home = (props) => {
               disabled={!enumerationTypeChanged || !citationTypeChanged}
               className="bg-black/20 enabled:bg-stone-500 hover:enabled:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
             >
-              New Citation
+              Add Citation
             </button>
             <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
           </div>

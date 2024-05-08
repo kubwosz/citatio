@@ -1,12 +1,17 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
-.cit-type-buttons{
-  @apply overflow-auto h-72 relative max-w-sm mx-auto bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col divide-y dark:divide-slate-200/5;
+  .cit-type-buttons {
+    @apply overflow-auto h-72 relative max-w-sm mx-auto bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black/5 rounded-xl flex flex-col divide-y dark:divide-slate-200/5;
+  }
 }
+
+html, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -16,11 +21,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-

@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .App-logo {
@@ -32,19 +35,20 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-.tooltip{
+.tooltip {
   position: absolute;
   inset: auto auto 0px 0px;
   margin: 0px;
   transform: translate3d(200px, -44.4px, 0px);
 }
 
-.copy-clipboard-button:hover + #my-tooltip{
+.copy-clipboard-button:hover+#my-tooltip {
   opacity: 1 !important;
 }
 

@@ -126,8 +126,8 @@ const Home = (props) => {
   // } = useFormContext()
 
   return (
-    <div className="w-screen h-screen bg-slate-700">
-      <div className="top-nav-bar grid grid-cols-2 gp-2 border-b border-slate-50 text-slate-100">
+    <div className="h-full w-full bg-slate-700 relative flex flex-col">
+      <div className="absolute h-12 w-full top-nav-bar grid grid-cols-2 gp-2 border-b border-slate-50 text-slate-100">
        
         <div className="place-self-start p-3">
           <span class="dot"></span>
@@ -141,7 +141,7 @@ const Home = (props) => {
         </div>
       </div>
 
-<div className="h-5/6 main-page grid grid-cols-2">
+<div className="main-page absolute top-12 bottom-10 w-full grid grid-cols-2 pt-5 pb-5">
       <div className="left-panel flex justify-center items-center"> 
       <FormProvider {...methods}>
         <form onSubmit={e => e.preventDefault()} noValidate className="border-4 border-stone-300">
@@ -174,6 +174,10 @@ const Home = (props) => {
               </div>
         </div>
       </div>
+      </div>
+
+      <div className="absolute h-10 bottom-0 w-full bottom-nav-bar gp-2 border-t border-slate-50 text-slate-100 flex">
+      <span class="dot ml-3 mt-2"> Created by </span>
       </div>
     </div>
   );

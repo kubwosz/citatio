@@ -144,7 +144,7 @@ const Home = (props) => {
 <div className="main-page absolute top-12 bottom-10 w-full grid grid-cols-2 pt-5 pb-5">
       <div className="left-panel flex justify-center items-center"> 
       <FormProvider {...methods}>
-        <form onSubmit={e => e.preventDefault()} noValidate className="border-4 border-stone-300">
+        <form onSubmit={e => e.preventDefault()} noValidate className="w-3/4 h-3/4 border-4 border-stone-300">
           <InputTags
             doiValue={doiValue}
             doiInputChangeHandler={doiInputChangeHandler}
@@ -160,7 +160,7 @@ const Home = (props) => {
               disabled={!enumerationTypeChanged || !citationTypeChanged}
               className="bg-black/20 enabled:bg-stone-500 hover:enabled:bg-blue-700 text-white font-bold py-2 px-4 rounded m-3 self-center"
             >
-              Add Citation
+              Get references
             </button>
             <p className="text-red-800">{doiNotFound ? "Doi not found" : ""}</p>
           </div>

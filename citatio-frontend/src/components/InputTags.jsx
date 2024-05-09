@@ -33,12 +33,12 @@ const InputTags = (props) => {
     const inputChangeHandler = (data) => {
         props.doiInputChangeHandler(data);
         setInputValue(data.target.value.replace(/\s/g, ''));
-        if (isDoi(data.target.value)) {
-            setIsInputValueDoi(true);
-        }
-        else {
-            setIsInputValueDoi(false);
-        }
+        // if (isDoi(data.target.value)) {
+        //     setIsInputValueDoi(true);
+        // }
+        // else {
+        //     setIsInputValueDoi(false);
+        // }
     };
 
     const inputDoiBulkChangeHandler = (data) => {
@@ -74,7 +74,7 @@ const InputTags = (props) => {
             {bulkDoi ?
                 <textarea
                     id="title"
-                    className={`resize-y max-h-32 min-h-12 block self-center bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block`}
+                    className={`resize-y max-h-32 min-h-12 block self-center bg-amber-100 w-3/5 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block`}
                     placeholder=" DOIs..."
                     type="text"
                     value={inputValue}
@@ -83,7 +83,7 @@ const InputTags = (props) => {
                 :
                 <input
                     id="title"
-                    className={`block bg-amber-100 w-3/12 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block ${isInputValueDoi ? 'border-2 bg-green-100 hover:bg-green-200 border-green-500' : ''}`}
+                    className={`block bg-amber-100 w-3/5 hover:bg-amber-200 py-2 rounded m-3 self-center inline-block ${isInputValueDoi ? 'border-2 bg-green-100 hover:bg-green-200 border-green-500' : ''}`}
                     placeholder=" DOI..."
                     type="text"
                     required

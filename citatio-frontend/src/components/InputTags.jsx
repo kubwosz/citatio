@@ -87,8 +87,7 @@ const InputTags = (props) => {
                     placeholder=" DOI..."
                     type="text"
                     required
-                    value={inputValue}
-                    onChange={inputChangeHandler}
+                    
                     {...register("title", {
                         required: {
                           value: true,

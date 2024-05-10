@@ -1,4 +1,5 @@
 export const isFormInvalid = err => {
+    console.log("dsads")
     if (Object.keys(err).length > 0) return true
     return false
   }

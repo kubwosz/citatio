@@ -102,13 +102,19 @@ const Home = (props) => {
   }
 
   const methods = useForm()
+  const [success, setSuccess] = useState(false)
 
-  const onSubmit = e => methods.handleSubmit(data => {
-    console.log(data)
+  const onSubmit = (e) => {
     console.log(citationTypeChanged)
     console.log(enumerationTypeChanged)
     submitHandler(e);
-  })
+    return  methods.handleSubmit(data => {
+      console.log(data)
+      methods.reset()
+      setSuccess(true)
+    });
+  }
+ 
 
   const setCitationTypeCustom = (e) => {
     setCitationType(e);

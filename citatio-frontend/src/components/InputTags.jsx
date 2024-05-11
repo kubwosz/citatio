@@ -31,8 +31,10 @@ const InputTags = (props) => {
     };
 
     const inputChangeHandler = (data) => {
+        console.log(data);
         props.doiInputChangeHandler(data);
-        setInputValue(data.target.value.replace(/\s/g, ''));
+        setInputValue(data.target.value);
+        // setInputValue(data.target.value.replace(/\s/g, ''));
         // if (isDoi(data.target.value)) {
         //     setIsInputValueDoi(true);
         // }
@@ -42,6 +44,7 @@ const InputTags = (props) => {
     };
 
     const inputDoiBulkChangeHandler = (data) => {
+        console.log(data);
         let dois = getDois(data.target.value);
         console.log(dois);
         setInputValue(data.target.value);
@@ -78,7 +81,7 @@ const InputTags = (props) => {
                     placeholder=" DOIs..."
                     type="text"
                     value={inputValue}
-                    onChange={inputDoiBulkChangeHandler}
+                    onChange={inputChangeHandler}
                 />
                 :
                 <input
@@ -87,7 +90,6 @@ const InputTags = (props) => {
                     placeholder=" DOI..."
                     type="text"
                     required
-                    
                     {...register("title", {
                         required: {
                           value: true,

@@ -34,12 +34,11 @@ const Home = (props) => {
     populateFields();
   }, [populateFields]);
 
-  async function submitHandler(event) {
+  async function submitHandler() {
     let resMany = await postGetDoiData("references");
     resMany?.map(r => {
       setCitationByType(r.Type, r.Value);
     })
-    event.preventDefault();
   }
 
   const doiInputChangeHandler = (data) => {
@@ -47,7 +46,7 @@ const Home = (props) => {
   };
 
   async function getDoiData(url) {
-    const response = await fetch("api/" + url + "/" + doiValue, {
+    const response = await fetch("api/reference/" + url + "/" + doiValue, {
       method: "GET",
     });
     let createdReference = await response.json();
@@ -55,11 +54,11 @@ const Home = (props) => {
   }
 
   async function postGetDoiData(url) {
-    let activeCitTypes = citations.flatMap(c => c.isActive ? c.type.toLowerCase() : []);
-
+    console.log("doiValue")
+    console.log(doiValue)
     const response = await fetch("api/" + url, {
       method: "POST",
-      body: JSON.stringify({ value: doiValue.toString(), citType: citationType })
+      body: JSON.stringify({ value: doiValue.toString(), citType: citationType.toLowerCase() })
     });
     if (response.status !== 200) {
       setDoiNotFound(true);
@@ -104,16 +103,12 @@ const Home = (props) => {
   const methods = useForm()
   const [success, setSuccess] = useState(false)
 
-  const onSubmit = (e) => {
-    console.log(citationTypeChanged)
-    console.log(enumerationTypeChanged)
-    submitHandler(e);
-    return  methods.handleSubmit(data => {
-      console.log(data)
-      methods.reset()
-      setSuccess(true)
-    });
-  }
+  const onSubmit = methods.handleSubmit(data => {
+    console.log(data.title)
+    setDoiValue(data.title);
+    getDoiData("aaa");
+    setSuccess(true)
+  });
  
 
   const setCitationTypeCustom = (e) => {
